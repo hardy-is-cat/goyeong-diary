@@ -1,17 +1,13 @@
 import { DefaultTheme } from "styled-components";
 
-const lightColors = {
-  bg: "#fff",
-  gnb: "#fff",
-  text: "#2D373B",
-  primary: "#F5467A",
-};
-
-const darkColors = {
-  bg: "#253034",
-  gnb: "#2D373B",
-  text: "#fff",
-  primary: "#ACEA6E",
+const colors = {
+  text: "#222",
+  black: "#444",
+  gray: "#AAAAAA",
+  lightGray: "#E5E5E5",
+  primary: "#AD58E1",
+  error: "#EC4848",
+  correct: "#19B200",
 };
 
 const fontSize = {
@@ -35,19 +31,12 @@ const media = {
   mobile: customMediaQuery(360),
 };
 
-export type LightColorTypes = typeof lightColors;
-export type DarkColorTypes = typeof darkColors;
+export type ColorsTypes = typeof colors;
 export type FontSizeTypes = typeof fontSize;
 export type MediaQueryTypes = typeof media;
 
-export const darkTheme: DefaultTheme = {
-  colors: darkColors,
-  media,
-  fontSize,
-};
-
-export const lightTheme: DefaultTheme = {
-  colors: lightColors,
+export const defaultTheme: DefaultTheme = {
+  colors,
   media,
   fontSize,
 };

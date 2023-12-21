@@ -1,14 +1,9 @@
 import "styled-components";
-import {
-  DarkColorTypes,
-  LightColorTypes,
-  FontSizeTypes,
-  MediaQueryTypes,
-} from "./theme";
+import { ColorsTypes, FontSizeTypes, MediaQueryTypes } from "./theme";
 
 declare module "styled-components" {
   export interface DefaultTheme {
-    colors: LightColorTypes | DarkColorTypes;
+    colors: ColorTypes;
     fontSize: FontSizeTypes;
     media: MediaQueryTypes;
   }
