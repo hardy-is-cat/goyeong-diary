@@ -1,31 +1,41 @@
-import { useState } from "react";
-import styled from "styled-components";
-import NextIcon from "/public/images/next.svg";
+import Button from "@/components/Button";
+import Input from "@/components/Input";
+import ToggleButton from "@/components/ToggleButton";
 
 export default function Home() {
-  const [isClicked, setIsClicked] = useState(false);
   return (
     <>
-      <H1Block isClicked={isClicked} onClick={() => setIsClicked(!isClicked)}>
-        해위
-      </H1Block>
-      <PBlock>배위</PBlock>
-      <NextIconBlock />
+      <Input
+        placeholder="ID"
+        disabled={false}
+        type="text"
+        helperText="helperText"
+      />
+      <Input
+        placeholder="ID"
+        disabled={true}
+        type="text"
+        helperText="helperText"
+      />
+      <Input
+        placeholder="ID"
+        disabled={false}
+        type="text"
+        helperText="helperText"
+        state="correct"
+      />
+      <Button>해위</Button>
+      <Button filled>해위</Button>
+      <Button disabled>해위</Button>
+      <select name="고양이선택" id="select-cat" defaultValue="기본값" required>
+        <option value="기본값" disabled>
+          선택해주세요
+        </option>
+        <option value="하디1">하디 1</option>
+        <option value="하디2">하디 2</option>
+        <option value="하디3">하디 3</option>
+      </select>
+      <ToggleButton />
     </>
   );
 }
-
-const H1Block = styled.h1<{ isClicked: boolean }>`
-  color: ${({ isClicked }) => (isClicked ? "red" : "blue")};
-  font-size: ${({ theme }) => theme.fontSize.headline1};
-`;
-
-const PBlock = styled.p`
-  font-weight: 400;
-`;
-
-const NextIconBlock = styled(NextIcon)`
-  path {
-    fill: ${({ theme }) => theme.colors.primary};
-  }
-`;

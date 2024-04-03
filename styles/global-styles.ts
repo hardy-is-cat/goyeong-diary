@@ -34,6 +34,18 @@ const GlobalStyle = createGlobalStyle`
     color: inherit;
   }
 
+  select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #999;
+    border-radius: 4px;
+    font-size: 16px;
+  }
+
+  select:focus {
+    box-shadow: 0 0 5px #AD58E1;
+  }
+
   .a11y-hidden {
     position: absolute;
     width: 1px;

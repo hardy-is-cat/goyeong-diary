@@ -3,7 +3,9 @@ import { DefaultTheme } from "styled-components";
 const colors = {
   text: "#222",
   black: "#444",
-  gray: "#AAAAAA",
+  gray1: "#666",
+  gray2: "#999",
+  gray3: "#AAAAAA",
   lightGray: "#E5E5E5",
   primary: "#AD58E1",
   error: "#EC4848",
