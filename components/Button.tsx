@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { MouseEventHandler, ReactNode } from "react";
 import styled, { css } from "styled-components";
 
 type ButtonTypes = {
@@ -6,11 +6,17 @@ type ButtonTypes = {
   disabled?: boolean;
   filled?: boolean;
   warn?: boolean;
+  onClick?: MouseEventHandler;
 };
 
-function Button({ children, disabled, filled, warn }: ButtonTypes) {
+function Button({ children, disabled, filled, warn, onClick }: ButtonTypes) {
   return (
-    <ButtonBlock disabled={disabled} $filled={filled} $warn={warn}>
+    <ButtonBlock
+      disabled={disabled}
+      $filled={filled}
+      $warn={warn}
+      onClick={onClick}
+    >
       {children}
     </ButtonBlock>
   );
