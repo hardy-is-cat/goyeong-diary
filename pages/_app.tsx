@@ -1,3 +1,4 @@
+import Layout from "@/components/Layout";
 import type { AppProps } from "next/app";
 import { ThemeProvider } from "styled-components";
 
@@ -9,7 +10,9 @@ export default function App({ Component, pageProps }: AppProps) {
     <>
       <GlobalStyle />
       <ThemeProvider theme={defaultTheme}>
-        <Component {...pageProps} />
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
       </ThemeProvider>
     </>
   );
