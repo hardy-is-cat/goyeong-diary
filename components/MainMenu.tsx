@@ -5,7 +5,7 @@ function MainMenu() {
   return (
     <MenuBlock>
       <li>
-        <Link href="#">
+        <Link href="/toilet">
           <p>감자캐기</p>
           <img src="images/icons/icon-dig-potato.png" />
         </Link>

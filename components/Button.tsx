@@ -1,20 +1,27 @@
 import { MouseEventHandler, ReactNode } from "react";
 import styled, { css } from "styled-components";
 
-type ButtonTypes = {
+interface ButtonTypes extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode;
-  disabled?: boolean;
   filled?: boolean;
   warn?: boolean;
   onClick?: MouseEventHandler;
-};
+}
 
-function Button({ children, disabled, filled, warn, onClick }: ButtonTypes) {
+function Button({
+  children,
+  disabled,
+  filled,
+  warn,
+  type = "button",
+  onClick,
+}: ButtonTypes) {
   return (
     <ButtonBlock
       disabled={disabled}
       $filled={filled}
       $warn={warn}
+      type={type}
       onClick={onClick}
     >
       {children}
@@ -36,6 +43,7 @@ const ButtonBlock = styled.button<{
   background-color: white;
   color: ${({ theme }) => theme.colors.primary};
   cursor: pointer;
+  transition: all 0.3s;
 
   ${({ $warn, theme }) =>
     $warn &&
