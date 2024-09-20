@@ -36,6 +36,7 @@ const QuantityInputBlock = styled.div`
     height: 40px;
     text-align: center;
     background-color: white;
+    flex-grow: 1;
   }
 `;
 

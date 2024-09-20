@@ -10,22 +10,22 @@ function PageTitle() {
     let title;
     switch (pathname) {
       case "/toilet":
-        title = "화장실 기록하기";
+        title = "화장실 기록";
         break;
-      case "/feed":
-        title = "식사 기록하기";
+      case "/feeding":
+        title = "식사 기록";
         break;
-      case "/play":
-        title = "놀이 기록하기";
+      case "/playing":
+        title = "놀이 기록";
         break;
-      case "/calendar":
-        title = "놀이 기록하기";
+      case "/vaccination":
+        title = "접종 기록";
         break;
       case "/hospital":
-        title = "놀이 기록하기";
+        title = "내주변 병원";
         break;
       case "/calendar":
-        title = "놀이 기록하기";
+        title = "기록 확인";
         break;
 
       default:

@@ -6,24 +6,20 @@ import styled from "styled-components";
 import Button from "@/components/Button";
 import DateInput from "@/components/DateInput";
 import PageTitle from "@/components/PageTitle";
-import QuantityInput from "@/components/QuantityInput";
+import Input from "@/components/Input";
 
-function ToiletIndex() {
+function FeedingIndex() {
   const [dateValue, setDateValue] = useState("");
-  const [pees, setPees] = useState(0);
-  const [poops, setPoops] = useState(0);
+  const [valueOfFood, setValueOfFood] = useState("");
+  const [volumeOfFood, setVolumeOfFood] = useState("");
   const [etcMemo, setEtcMemo] = useState("");
 
   const handleDate = (date: string) => {
     setDateValue(date);
   };
 
-  const handlePees = (num: number) => {
-    setPees(pees + num);
-  };
-
-  const handlePoops = (num: number) => {
-    setPoops(poops + num);
+  const handleVolumeOfFood = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setVolumeOfFood(e.target.value);
   };
 
   return (
@@ -35,12 +31,33 @@ function ToiletIndex() {
           <DateInput name="date" handleDate={handleDate} />
         </InputWrapper>
         <InputWrapper>
-          <label htmlFor="pees">감자</label>
-          <QuantityInput quantity={pees} handleQuantity={handlePees} />
+          <label htmlFor="pees">식사 종류</label>
+          <div>
+            <select
+              name="type-of-feed"
+              required
+              onChange={(e) => setValueOfFood(e.target.value)}
+            >
+              <option value="" disabled selected>
+                식사 종류를 선택해주세요
+              </option>
+              <option value="wet-food">습식</option>
+              <option value="dry-food">건식</option>
+              <option value="boiled-food">화식</option>
+              <option value="etc">기타</option>
+            </select>
+          </div>
         </InputWrapper>
         <InputWrapper>
-          <label htmlFor="poops">맛동산</label>
-          <QuantityInput quantity={poops} handleQuantity={handlePoops} />
+          <label htmlFor="volume">양</label>
+          <Input
+            id="volume"
+            type="number"
+            placeholder="식사량을 기록하세요."
+            value={volumeOfFood}
+            onChange={handleVolumeOfFood}
+          />
+          <span style={{ paddingTop: "10px", paddingLeft: "8px" }}>g</span>
         </InputWrapper>
         <InputWrapper>
           <label htmlFor="memo">특이사항</label>
@@ -54,8 +71,8 @@ function ToiletIndex() {
           </div>
         </InputWrapper>
         <Button
-          disabled={!dateValue || !pees || !poops}
-          filled={!!dateValue && !!pees && !!poops}
+          disabled={!dateValue || !valueOfFood || !volumeOfFood}
+          filled={!!dateValue && !!valueOfFood && !!volumeOfFood}
         >
           등록하기
         </Button>
@@ -64,13 +81,14 @@ function ToiletIndex() {
   );
 }
 
-export default ToiletIndex;
+export default FeedingIndex;
 
 const InputWrapper = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
   margin-bottom: 10px;
+
   &:last-child {
     margin-bottom: 0;
   }

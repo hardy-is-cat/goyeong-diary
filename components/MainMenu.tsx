@@ -11,19 +11,19 @@ function MainMenu() {
         </Link>
       </li>
       <li>
-        <Link href="#">
+        <Link href="/feeding">
           <p>밥주기</p>
           <img src="images/icons/icon-feeding.png" />
         </Link>
       </li>
       <li>
-        <Link href="#">
+        <Link href="/playing">
           <p>놀아주기</p>
           <img src="images/icons/icon-playing.png" />
         </Link>
       </li>
       <li>
-        <Link href="#">
+        <Link href="/vaccination">
           <p>접종하기</p>
           <img src="images/icons/icon-vaccination.png" />
         </Link>

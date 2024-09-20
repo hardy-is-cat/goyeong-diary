@@ -17,8 +17,16 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
   }
   
-  input, button {
+  input, button, textarea {
     display: block;
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid #999;
+    font-size: 14px;
+  }
+  
+  input::placeholder {
+    font-size: 14px;
   }
   
   h1, h2, h3 {
@@ -36,10 +44,10 @@ const GlobalStyle = createGlobalStyle`
 
   select {
     width: 100%;
-    padding: 10px;
+    padding: 10px 4px;
     border: 1px solid #999;
     border-radius: 4px;
-    font-size: 16px;
+    font-size: 14px;
   }
 
   select:focus {

@@ -1,12 +1,9 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
-type InputTypes = {
-  placeholder: string;
-  disabled?: boolean;
+interface InputTypes extends React.InputHTMLAttributes<HTMLInputElement> {
   helperText?: string;
-  type?: string;
   state?: "error" | "correct";
-};
+}
 
 function Input({
   placeholder,
@@ -14,10 +11,16 @@ function Input({
   helperText,
   type = "text",
   state,
+  ...props
 }: InputTypes) {
   return (
     <InputWrapper $state={state}>
-      <input type={type} placeholder={placeholder} disabled={disabled} />
+      <input
+        type={type}
+        placeholder={placeholder}
+        disabled={disabled}
+        {...props}
+      />
       <p>{helperText}</p>
     </InputWrapper>
   );
