@@ -35,10 +35,11 @@ function FeedingIndex() {
           <div>
             <select
               name="type-of-feed"
+              defaultValue="default"
               required
               onChange={(e) => setValueOfFood(e.target.value)}
             >
-              <option value="" disabled selected>
+              <option value="default" disabled>
                 식사 종류를 선택해주세요
               </option>
               <option value="wet-food">습식</option>

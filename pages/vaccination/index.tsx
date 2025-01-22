@@ -41,11 +41,12 @@ function VaccinationIndex() {
           <label htmlFor="value-of-vaccine">접종 종류</label>
           <div>
             <select
+              defaultValue="default"
               name="value-of-vaccine"
               required
               onChange={handleValueOfVaccine}
             >
-              <option value="" disabled selected>
+              <option value="default" disabled>
                 백신 종류를 선택해주세요
               </option>
               <option value="di-vac">심장사상충</option>
