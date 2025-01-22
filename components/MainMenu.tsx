@@ -43,14 +43,18 @@ const MenuBlock = styled.ul`
 
   li {
     width: calc(50% - 6px);
-    padding-top: 32px;
-    padding-bottom: 32px;
     background-color: ${({ theme }) => theme.colors.primary};
     border-radius: 12px;
     color: white;
     text-align: center;
     font-size: ${({ theme }) => theme.fontSize.headline3};
     font-weight: 700;
+
+    a {
+      display: block;
+      padding-top: 32px;
+      padding-bottom: 32px;
+    }
 
     p {
       margin-bottom: 20px;
