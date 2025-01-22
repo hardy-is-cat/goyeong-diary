@@ -31,7 +31,7 @@ function FeedingIndex() {
           <DateInput name="date" handleDate={handleDate} />
         </InputWrapper>
         <InputWrapper>
-          <label htmlFor="pees">식사 종류</label>
+          <label htmlFor="type-of-feed">식사 종류</label>
           <div>
             <select
               name="type-of-feed"

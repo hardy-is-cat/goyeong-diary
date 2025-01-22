@@ -10,7 +10,7 @@ function GNB() {
   return (
     <GNBBlock>
       <li>
-        <Link href="#">
+        <Link href="/">
           <HomeIcon />홈
         </Link>
       </li>
