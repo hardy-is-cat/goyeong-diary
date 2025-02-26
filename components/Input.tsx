@@ -21,7 +21,7 @@ function Input({
         disabled={disabled}
         {...props}
       />
-      <p>{helperText}</p>
+      {helperText && <p>{helperText}</p>}
     </InputWrapper>
   );
 }

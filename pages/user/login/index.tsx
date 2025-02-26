@@ -16,13 +16,12 @@ function LoginIndex() {
       .then((userCredential) => {
         const user = userCredential.user;
         alert("로그인 성공!");
-        console.log(user);
         router.push("/");
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        console.error("로그인 실패!!", errorCode, errorMessage);
+        alert("회원정보를 확인해주세요!");
       });
   };
 
@@ -40,7 +39,9 @@ function LoginIndex() {
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
-      <Button onClick={handleLogin}>로그인</Button>
+      <Button onClick={handleLogin} disabled={!email || !password}>
+        로그인
+      </Button>
       <Link href="/user/signup">회원가입</Link>
     </>
   );
