@@ -27,7 +27,7 @@ function GNB() {
         </Link>
       </li>
       <li>
-        <Link href="#">
+        <Link href="/setting">
           <SettingIcon />
           설정
         </Link>

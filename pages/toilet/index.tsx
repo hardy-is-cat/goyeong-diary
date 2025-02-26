@@ -54,8 +54,8 @@ function ToiletIndex() {
           </div>
         </InputWrapper>
         <Button
-          disabled={!dateValue || !pees || !poops}
-          filled={!!dateValue && !!pees && !!poops}
+          disabled={!dateValue || (!pees && !poops)}
+          filled={!!dateValue && (!!pees || !!poops)}
         >
           등록하기
         </Button>

@@ -59,6 +59,7 @@ const DecreaseButton = styled.button<{ $quantity: number }>`
 
   &:disabled {
     border: 1px solid ${({ theme }) => theme.colors.gray2};
+    cursor: not-allowed;
   }
 
   // - 아이콘
