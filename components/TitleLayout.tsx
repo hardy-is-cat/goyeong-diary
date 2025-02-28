@@ -1,9 +1,8 @@
-import React, { PropsWithChildren, ReactElement } from "react";
+import React, { ReactElement } from "react";
 import GlobalStyle from "styles/global-styles";
 import { ThemeProvider } from "styled-components";
 import { defaultTheme } from "styles/theme";
 
-import { NextPageWithLayout } from "pages/_app";
 import Layout from "@/components/Layout";
 import PageTitle from "@/components/PageTitle";
 
