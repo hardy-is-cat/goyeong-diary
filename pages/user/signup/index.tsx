@@ -74,98 +74,100 @@ function SignUpIndex() {
   };
 
   return (
-    <form>
-      <InputBlock>
-        <label htmlFor="signup-email">이메일</label>
-        <Input
-          id="signup-email"
-          type="email"
-          placeholder="이메일을 입력해주세요."
-          state={
-            email?.length ? (validateEmail ? "correct" : "error") : undefined
+    <main>
+      <form>
+        <InputBlock>
+          <label htmlFor="signup-email">이메일</label>
+          <Input
+            id="signup-email"
+            type="email"
+            placeholder="이메일을 입력해주세요."
+            state={
+              email?.length ? (validateEmail ? "correct" : "error") : undefined
+            }
+            helperText={
+              email?.length
+                ? validateEmail
+                  ? "사용 가능한 이메일입니다."
+                  : "이메일 형식을 확인해주세요."
+                : undefined
+            }
+            onChange={(e) => handleEmail(e)}
+          />
+        </InputBlock>
+        <InputBlock>
+          <label htmlFor="signup-nickname">닉네임</label>
+          <Input
+            id="signup-nickname"
+            type="text"
+            placeholder="닉네임을 입력해주세요."
+            onChange={(e) => setNickname(e.target.value)}
+          />
+        </InputBlock>
+        <InputBlock>
+          <label htmlFor="signup-password">비밀번호</label>
+          <Input
+            id="signup-password"
+            type="password"
+            placeholder="비밀번호를 입력해주세요."
+            state={
+              validatePassword === undefined
+                ? undefined
+                : validatePassword
+                  ? "correct"
+                  : "error"
+            }
+            helperText={
+              validatePassword === undefined
+                ? undefined
+                : validatePassword
+                  ? "사용 가능한 비밀번호입니다."
+                  : "비밀번호는 8자리 이상의 영어, 숫자, 특수문자 !@#$%^&*의 조합만 가능합니다."
+            }
+            onChange={(e) => handlePassword(e)}
+            value={password}
+          />
+        </InputBlock>
+        <InputBlock>
+          <label htmlFor="signup-password-try">비밀번호 확인</label>
+          <Input
+            id="signup-password-try"
+            type="password"
+            placeholder="비밀번호를 다시 입력해주세요."
+            onChange={(e) => handleTryPassword(e)}
+            value={tryPassword}
+            state={
+              tryPassword?.length
+                ? isMatchedPassword
+                  ? "correct"
+                  : "error"
+                : undefined
+            }
+            helperText={
+              tryPassword?.length
+                ? isMatchedPassword
+                  ? "비밀번호가 일치합니다"
+                  : "비밀번호가 일치하지 않습니다"
+                : undefined
+            }
+          />
+        </InputBlock>
+        <Button
+          type="button"
+          onClick={handleSignUp}
+          filled
+          disabled={
+            !email ||
+            !validateEmail ||
+            !nickname ||
+            !password ||
+            !isMatchedPassword
           }
-          helperText={
-            email?.length
-              ? validateEmail
-                ? "사용 가능한 이메일입니다."
-                : "이메일 형식을 확인해주세요."
-              : undefined
-          }
-          onChange={(e) => handleEmail(e)}
-        />
-      </InputBlock>
-      <InputBlock>
-        <label htmlFor="signup-nickname">닉네임</label>
-        <Input
-          id="signup-nickname"
-          type="text"
-          placeholder="닉네임을 입력해주세요."
-          onChange={(e) => setNickname(e.target.value)}
-        />
-      </InputBlock>
-      <InputBlock>
-        <label htmlFor="signup-password">비밀번호</label>
-        <Input
-          id="signup-password"
-          type="password"
-          placeholder="비밀번호를 입력해주세요."
-          state={
-            validatePassword === undefined
-              ? undefined
-              : validatePassword
-                ? "correct"
-                : "error"
-          }
-          helperText={
-            validatePassword === undefined
-              ? undefined
-              : validatePassword
-                ? "사용 가능한 비밀번호입니다."
-                : "비밀번호는 8자리 이상의 영어, 숫자, 특수문자 !@#$%^&*의 조합만 가능합니다."
-          }
-          onChange={(e) => handlePassword(e)}
-          value={password}
-        />
-      </InputBlock>
-      <InputBlock>
-        <label htmlFor="signup-password-try">비밀번호 확인</label>
-        <Input
-          id="signup-password-try"
-          type="password"
-          placeholder="비밀번호를 다시 입력해주세요."
-          onChange={(e) => handleTryPassword(e)}
-          value={tryPassword}
-          state={
-            tryPassword?.length
-              ? isMatchedPassword
-                ? "correct"
-                : "error"
-              : undefined
-          }
-          helperText={
-            tryPassword?.length
-              ? isMatchedPassword
-                ? "비밀번호가 일치합니다"
-                : "비밀번호가 일치하지 않습니다"
-              : undefined
-          }
-        />
-      </InputBlock>
-      <Button
-        type="button"
-        onClick={handleSignUp}
-        filled
-        disabled={
-          !email ||
-          !validateEmail ||
-          !nickname ||
-          !password ||
-          !isMatchedPassword
-        }
-      >
-        회원가입
-      </Button>
-    </form>
+        >
+          회원가입
+        </Button>
+      </form>
+    </main>
   );
 }
 

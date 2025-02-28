@@ -1,13 +1,15 @@
 "use client";
 
+import { ReactElement, useState } from "react";
+import styled from "styled-components";
+
 import Button from "@/components/Button";
 import DateInput from "@/components/DateInput";
 import Input from "@/components/Input";
-import PageTitle from "@/components/PageTitle";
-import { useState } from "react";
-import styled from "styled-components";
+import TitleLayout from "@/components/TitleLayout";
+import { NextPageWithLayout } from "pages/_app";
 
-function VaccinationIndex() {
+const VaccinationIndex: NextPageWithLayout = () => {
   const [dateValue, setDateValue] = useState("");
   const [valueOfVaccine, setValueOfVaccine] = useState("");
   const [etcVaccine, setEtcVaccine] = useState("");
@@ -31,8 +33,7 @@ function VaccinationIndex() {
 
   return (
     <main>
-      <PageTitle />
-      <form action="#" style={{ padding: "20px 30px" }}>
+      <form action="#">
         <InputWrapper>
           <label htmlFor="date">현재 시간</label>
           <DateInput name="date" handleDate={handleDate} />
@@ -71,9 +72,13 @@ function VaccinationIndex() {
       </form>
     </main>
   );
-}
+};
 
 export default VaccinationIndex;
+
+VaccinationIndex.getLayout = function getLayout(page: ReactElement) {
+  return <TitleLayout>{page}</TitleLayout>;
+};
 
 const InputWrapper = styled.div`
   display: flex;

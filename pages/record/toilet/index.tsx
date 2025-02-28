@@ -1,14 +1,15 @@
 "use client";
 
-import { useState } from "react";
+import { ReactElement, useState } from "react";
 import styled from "styled-components";
 
 import Button from "@/components/Button";
 import DateInput from "@/components/DateInput";
-import PageTitle from "@/components/PageTitle";
 import QuantityInput from "@/components/QuantityInput";
+import TitleLayout from "@/components/TitleLayout";
+import { NextPageWithLayout } from "pages/_app";
 
-function ToiletIndex() {
+const ToiletIndex: NextPageWithLayout = () => {
   const [dateValue, setDateValue] = useState("");
   const [pees, setPees] = useState(0);
   const [poops, setPoops] = useState(0);
@@ -28,8 +29,7 @@ function ToiletIndex() {
 
   return (
     <main>
-      <PageTitle />
-      <form action="#" style={{ padding: "20px 30px" }}>
+      <form action="#">
         <InputWrapper>
           <label htmlFor="date">현재 시간</label>
           <DateInput name="date" handleDate={handleDate} />
@@ -62,9 +62,13 @@ function ToiletIndex() {
       </form>
     </main>
   );
-}
+};
 
 export default ToiletIndex;
+
+ToiletIndex.getLayout = function getLayout(page: ReactElement) {
+  return <TitleLayout>{page}</TitleLayout>;
+};
 
 const InputWrapper = styled.div`
   display: flex;

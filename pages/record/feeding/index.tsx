@@ -1,14 +1,15 @@
 "use client";
 
-import { useState } from "react";
+import { ReactElement, useState } from "react";
 import styled from "styled-components";
 
 import Button from "@/components/Button";
 import DateInput from "@/components/DateInput";
-import PageTitle from "@/components/PageTitle";
 import Input from "@/components/Input";
+import TitleLayout from "@/components/TitleLayout";
+import { NextPageWithLayout } from "pages/_app";
 
-function FeedingIndex() {
+const FeedingIndex: NextPageWithLayout = () => {
   const [dateValue, setDateValue] = useState("");
   const [valueOfFood, setValueOfFood] = useState("");
   const [volumeOfFood, setVolumeOfFood] = useState("");
@@ -24,8 +25,7 @@ function FeedingIndex() {
 
   return (
     <main>
-      <PageTitle />
-      <form action="#" style={{ padding: "20px 30px" }}>
+      <form action="#">
         <InputWrapper>
           <label htmlFor="date">현재 시간</label>
           <DateInput name="date" handleDate={handleDate} />
@@ -80,9 +80,13 @@ function FeedingIndex() {
       </form>
     </main>
   );
-}
+};
 
 export default FeedingIndex;
+
+FeedingIndex.getLayout = function getLayout(page: ReactElement) {
+  return <TitleLayout>{page}</TitleLayout>;
+};
 
 const InputWrapper = styled.div`
   display: flex;

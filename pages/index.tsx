@@ -1,15 +1,13 @@
-"use client";
-
 import MainMenu from "@/components/MainMenu";
 import styled from "styled-components";
 
 export default function Home() {
   return (
-    <>
+    <main>
       <MyCatPicBlock></MyCatPicBlock>
       <GreetBlock>오늘은 무엇을 함께 했나요?</GreetBlock>
       <MainMenu />
-    </>
+    </main>
   );
 }
 

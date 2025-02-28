@@ -5,25 +5,25 @@ function MainMenu() {
   return (
     <MenuBlock>
       <li>
-        <Link href="/toilet">
+        <Link href="/record/toilet">
           <p>감자캐기</p>
           <img src="images/icons/icon-dig-potato.png" />
         </Link>
       </li>
       <li>
-        <Link href="/feeding">
+        <Link href="/record/feeding">
           <p>밥주기</p>
           <img src="images/icons/icon-feeding.png" />
         </Link>
       </li>
       <li>
-        <Link href="/playing">
+        <Link href="/record/playing">
           <p>놀아주기</p>
           <img src="images/icons/icon-playing.png" />
         </Link>
       </li>
       <li>
-        <Link href="/vaccination">
+        <Link href="/record/vaccination">
           <p>접종하기</p>
           <img src="images/icons/icon-vaccination.png" />
         </Link>
@@ -38,7 +38,6 @@ const MenuBlock = styled.ul`
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
-  width: 90%;
   margin: 0 auto;
 
   li {

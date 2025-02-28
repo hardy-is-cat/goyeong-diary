@@ -9,16 +9,16 @@ function PageTitle() {
   const currentTitle = (pathname: string) => {
     let title;
     switch (pathname) {
-      case "/toilet":
+      case "/record/toilet":
         title = "화장실 기록";
         break;
-      case "/feeding":
+      case "/record/feeding":
         title = "식사 기록";
         break;
-      case "/playing":
+      case "/record/playing":
         title = "놀이 기록";
         break;
-      case "/vaccination":
+      case "/record/vaccination":
         title = "접종 기록";
         break;
       case "/hospital":
