@@ -1,3 +1,4 @@
+import { forwardRef } from "react";
 import styled from "styled-components";
 
 interface InputTypes extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -5,26 +6,25 @@ interface InputTypes extends React.InputHTMLAttributes<HTMLInputElement> {
   state?: "error" | "correct";
 }
 
-function Input({
-  placeholder,
-  disabled,
-  helperText,
-  type = "text",
-  state,
-  ...props
-}: InputTypes) {
-  return (
-    <InputWrapper $state={state}>
-      <input
-        type={type}
-        placeholder={placeholder}
-        disabled={disabled}
-        {...props}
-      />
-      {helperText && <p>{helperText}</p>}
-    </InputWrapper>
-  );
-}
+const Input = forwardRef<HTMLInputElement, InputTypes>(
+  (
+    { placeholder, disabled, helperText, type = "text", state, ...props },
+    ref
+  ) => {
+    return (
+      <InputWrapper $state={state}>
+        <input
+          ref={ref}
+          type={type}
+          placeholder={placeholder}
+          disabled={disabled}
+          {...props}
+        />
+        {helperText && <p>{helperText}</p>}
+      </InputWrapper>
+    );
+  }
+);
 
 export default Input;
 

@@ -15,6 +15,7 @@ function Button({
   warn,
   type = "button",
   onClick,
+  ...props
 }: ButtonTypes) {
   return (
     <ButtonBlock
@@ -23,6 +24,7 @@ function Button({
       $warn={warn}
       type={type}
       onClick={onClick}
+      {...props}
     >
       {children}
     </ButtonBlock>
