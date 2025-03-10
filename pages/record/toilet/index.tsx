@@ -10,14 +10,10 @@ import TitleLayout from "@/components/TitleLayout";
 import { NextPageWithLayout } from "pages/_app";
 
 const ToiletIndex: NextPageWithLayout = () => {
-  const [dateValue, setDateValue] = useState("");
+  const [date, setDate] = useState("");
   const [pees, setPees] = useState(0);
   const [poops, setPoops] = useState(0);
   const [etcMemo, setEtcMemo] = useState("");
-
-  const handleDate = (date: string) => {
-    setDateValue(date);
-  };
 
   const handlePees = (num: number) => {
     setPees(pees + num);
@@ -32,7 +28,11 @@ const ToiletIndex: NextPageWithLayout = () => {
       <form action="#">
         <InputWrapper>
           <label htmlFor="date">현재 시간</label>
-          <DateInput name="date" handleDate={handleDate} />
+          <DateInput
+            name="date"
+            value={date}
+            onChange={(e) => setDate(e.target.value)}
+          />
         </InputWrapper>
         <InputWrapper>
           <label htmlFor="pees">감자</label>
@@ -54,8 +54,8 @@ const ToiletIndex: NextPageWithLayout = () => {
           </div>
         </InputWrapper>
         <Button
-          disabled={!dateValue || (!pees && !poops)}
-          filled={!!dateValue && (!!pees || !!poops)}
+          disabled={!date || (!pees && !poops)}
+          filled={!!date && (!!pees || !!poops)}
         >
           등록하기
         </Button>

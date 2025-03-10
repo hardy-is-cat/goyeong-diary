@@ -2,10 +2,9 @@ import styled from "styled-components";
 
 interface DateInputType extends React.InputHTMLAttributes<HTMLInputElement> {
   name: string;
-  handleDate: (date: string) => void;
 }
 
-function DateInput({ name, handleDate }: DateInputType) {
+function DateInput({ name, ...props }: DateInputType) {
   // 현재 시간 가져오는 함수, input 기본값으로 설정하려 했는데 선택값이랑 충돌나서 뺌
   const getCurrentTime = () => {
     const date = new Date();
@@ -20,13 +19,7 @@ function DateInput({ name, handleDate }: DateInputType) {
     return `${year}-${month}-${day}T${hours}:${minutes}`;
   };
 
-  return (
-    <InputBlock
-      type="datetime-local"
-      name={name}
-      onChange={(e) => handleDate(e.target.value)}
-    />
-  );
+  return <InputBlock type="datetime-local" name={name} {...props} />;
 }
 
 export default DateInput;

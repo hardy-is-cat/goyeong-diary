@@ -10,13 +10,9 @@ import TitleLayout from "@/components/TitleLayout";
 import { NextPageWithLayout } from "pages/_app";
 
 const VaccinationIndex: NextPageWithLayout = () => {
-  const [dateValue, setDateValue] = useState("");
+  const [date, setDate] = useState("");
   const [valueOfVaccine, setValueOfVaccine] = useState("");
   const [etcVaccine, setEtcVaccine] = useState("");
-
-  const handleDate = (date: string) => {
-    setDateValue(date);
-  };
 
   const handleValueOfVaccine = (e: React.ChangeEvent<HTMLSelectElement>) => {
     if (valueOfVaccine !== "etc") {
@@ -36,7 +32,11 @@ const VaccinationIndex: NextPageWithLayout = () => {
       <form action="#">
         <InputWrapper>
           <label htmlFor="date">현재 시간</label>
-          <DateInput name="date" handleDate={handleDate} />
+          <DateInput
+            name="date"
+            value={date}
+            onChange={(e) => setDate(e.target.value)}
+          />
         </InputWrapper>
         <InputWrapper>
           <label htmlFor="value-of-vaccine">접종 종류</label>
@@ -66,7 +66,7 @@ const VaccinationIndex: NextPageWithLayout = () => {
             )}
           </div>
         </InputWrapper>
-        <Button disabled={!dateValue} filled={!!dateValue}>
+        <Button disabled={!date} filled={!!date}>
           등록하기
         </Button>
       </form>
