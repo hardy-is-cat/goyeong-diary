@@ -25,6 +25,6 @@ const goyeongDiaryApp = !getApps().length
   : getApp();
 const goyeongDiaryFirestore = getFirestore(goyeongDiaryApp);
 const auth = getAuth(goyeongDiaryApp);
-const storage = getStorage(goyeongDiaryApp);
+const storage = getFirestore(goyeongDiaryApp);
 
 export { goyeongDiaryFirestore, auth, storage };

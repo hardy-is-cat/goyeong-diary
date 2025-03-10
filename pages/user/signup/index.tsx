@@ -27,7 +27,7 @@ function SignUpIndex() {
           displayName: nickname,
         });
         alert(`환영합니다 ${nickname}님!`);
-        router.push("/");
+        router.push("/user/login");
       })
       .catch((error) => {
         const errorCode = error.code;

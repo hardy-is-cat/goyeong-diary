@@ -1,11 +1,28 @@
-import MainMenu from "@/components/MainMenu";
+import { auth } from "firebaseInit";
+import { useEffect } from "react";
 import styled from "styled-components";
 
+import MainMenu from "@/components/MainMenu";
+import { useRouter } from "next/router";
+
 export default function Home() {
+  const router = useRouter();
+  const user = auth.currentUser;
+
+  useEffect(() => {
+    if (user === null) {
+      router.push("/user/login");
+    }
+  }, []);
+
   return (
     <main>
       <MyCatPicBlock></MyCatPicBlock>
-      <GreetBlock>오늘은 무엇을 함께 했나요?</GreetBlock>
+      <GreetBlock>
+        안녕하세요 {user?.displayName}님!
+        <br />
+        오늘은 무엇을 함께 했나요?
+      </GreetBlock>
       <MainMenu />
     </main>
   );
