@@ -3,7 +3,6 @@ import GlobalStyle from "styles/global-styles";
 import { ThemeProvider } from "styled-components";
 import { defaultTheme } from "styles/theme";
 
-import Layout from "@/components/Layout";
 import PageTitle from "@/components/PageTitle";
 
 const TitleLayout = ({ children }: { children: ReactElement }) => {
@@ -11,10 +10,8 @@ const TitleLayout = ({ children }: { children: ReactElement }) => {
     <>
       <GlobalStyle />
       <ThemeProvider theme={defaultTheme}>
-        <Layout>
-          <PageTitle />
-          {children}
-        </Layout>
+        <PageTitle />
+        {children}
       </ThemeProvider>
     </>
   );

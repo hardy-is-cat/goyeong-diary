@@ -27,6 +27,9 @@ function PageTitle() {
       case "/calendar":
         title = "기록 확인";
         break;
+      case "/user/add-pet":
+        title = "내새꾸 등록하기";
+        break;
 
       default:
         title = "페이지 이름 없음";
