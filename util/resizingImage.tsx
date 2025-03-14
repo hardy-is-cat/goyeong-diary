@@ -1,32 +1,26 @@
 async function resizingImage(image: File) {
   const { originWidth, originHeight } = await readImageFile(image);
-  console.log(originWidth, originHeight);
   let resizeWidth = 0;
   let resizeHeight = 0;
+  const IMAGE_MAX_SIZE = 180;
 
-  const MAX_SIZE = 180;
+  // 리사이징 할 이미지 크기 계산
   if (originWidth >= originHeight) {
-    const ratio = MAX_SIZE / originHeight;
+    const ratio = IMAGE_MAX_SIZE / originHeight;
     resizeWidth = originWidth * ratio;
     resizeHeight = originHeight * ratio;
   } else if (originWidth < originHeight) {
-    const ratio = MAX_SIZE / originWidth;
+    const ratio = IMAGE_MAX_SIZE / originWidth;
     resizeWidth = originWidth * ratio;
     resizeHeight = originHeight * ratio;
   }
 
-  console.log("리사이징!", resizeWidth, resizeHeight);
-
   const imgUrl = URL.createObjectURL(image);
-
   const canvas = document.createElement("canvas");
   const ctx = canvas.getContext("2d");
 
-  const CANVAS_WIDTH = 180;
-  const CANVAS_HEIGHT = 180;
-
-  canvas.width = CANVAS_WIDTH;
-  canvas.height = CANVAS_HEIGHT;
+  canvas.width = IMAGE_MAX_SIZE;
+  canvas.height = IMAGE_MAX_SIZE;
 
   const img = new Image();
 
@@ -34,8 +28,8 @@ async function resizingImage(image: File) {
     img.onload = async () => {
       ctx?.drawImage(
         img,
-        -((resizeWidth - CANVAS_WIDTH) / 2),
-        -((resizeHeight - CANVAS_HEIGHT) / 2),
+        -((resizeWidth - IMAGE_MAX_SIZE) / 2),
+        -((resizeHeight - IMAGE_MAX_SIZE) / 2),
         resizeWidth,
         resizeHeight
       );
@@ -63,9 +57,6 @@ async function readImageFile(
   image: File
 ): Promise<{ originWidth: number; originHeight: number }> {
   return new Promise((resolve, reject) => {
-    let originWidth = 0;
-    let originHeight = 0;
-
     const imgUrl = URL.createObjectURL(image);
     const reader = new FileReader();
     reader.readAsDataURL(image);
@@ -75,15 +66,8 @@ async function readImageFile(
       img.src = imgUrl;
 
       img.onload = function () {
-        originWidth = img.width;
-        originHeight = img.height;
-        console.log(
-          "이미지 크기",
-          "가로: ",
-          originWidth,
-          "세로: ",
-          originHeight
-        );
+        const originWidth = img.width;
+        const originHeight = img.height;
         URL.revokeObjectURL(imgUrl);
         resolve({ originWidth, originHeight });
       };
@@ -94,6 +78,7 @@ async function readImageFile(
       };
 
       reader.onerror = (error) => {
+        URL.revokeObjectURL(imgUrl);
         reject(new Error(`파일 읽기 실패: ${error}`));
       };
     };

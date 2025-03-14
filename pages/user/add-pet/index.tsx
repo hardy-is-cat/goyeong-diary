@@ -2,13 +2,13 @@ import { FormEvent, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import { addDoc, collection } from "firebase/firestore";
 import { storage } from "firebaseInit";
+import resizingImage from "util/resizingImage";
 import fetchImgbb from "util/fetchImgbb";
 import styled from "styled-components";
 
 import Button from "@/components/Button";
 import Input from "@/components/Input";
 import PageTitle from "@/components/PageTitle";
-import resizingImage from "util/resizingImage";
 
 function AddPetIndex() {
   const [name, setName] = useState("");
@@ -23,12 +23,9 @@ function AddPetIndex() {
   // 버튼과 input type="file" 연동
   // 버튼 클릭 이벤트
   const handleFileInput = () => {
-    console.log("버튼 click!");
     if (!picFile) {
-      console.log("파일 선택!");
       pictureRef.current?.click();
     } else {
-      console.log("파일 초기화!");
       resetPicture();
     }
   };
@@ -38,10 +35,7 @@ function AddPetIndex() {
     const file = e.target.files?.[0];
 
     // 파일이 없거나 이전 파일과 같으면 리턴처리
-    if (!file) {
-      alert("파일선택 취소");
-      return;
-    }
+    if (!file) return;
 
     setPicFile(file);
 
@@ -65,7 +59,7 @@ function AddPetIndex() {
 
     // imgbb 이미지 업로드
     if (resizingPicBlob) {
-      await fetchImgbb(resizingPicBlob).then((res) => {
+      await fetchImgbb(resizingPicBlob, picFile!.name).then((res) => {
         imgbbThumbUrl = res.data.image.url;
       });
     }
