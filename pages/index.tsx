@@ -1,31 +1,43 @@
-import { useState } from "react";
+import { auth } from "firebaseInit";
+import { useEffect } from "react";
 import styled from "styled-components";
-import NextIcon from "/public/images/next.svg";
+
+import MainMenu from "@/components/MainMenu";
+import { useRouter } from "next/router";
 
 export default function Home() {
-  const [isClicked, setIsClicked] = useState(false);
+  const router = useRouter();
+  const user = auth.currentUser;
+
+  useEffect(() => {
+    if (user === null) {
+      router.push("/user/login");
+    }
+  }, []);
+
   return (
-    <>
-      <H1Block isClicked={isClicked} onClick={() => setIsClicked(!isClicked)}>
-        해위
-      </H1Block>
-      <PBlock>배위</PBlock>
-      <NextIconBlock />
-    </>
+    <main>
+      <MyCatPicBlock></MyCatPicBlock>
+      <GreetBlock>
+        안녕하세요 {user?.displayName}님!
+        <br />
+        오늘은 무엇을 함께 했나요?
+      </GreetBlock>
+      <MainMenu />
+    </main>
   );
 }
 
-const H1Block = styled.h1<{ isClicked: boolean }>`
-  color: ${({ isClicked }) => (isClicked ? "red" : "blue")};
-  font-size: ${({ theme }) => theme.fontSize.headline1};
+const MyCatPicBlock = styled.div`
+  width: 240px;
+  height: 240px;
+  margin: 50px auto 20px;
+  background-color: gray;
+  border-radius: 999px;
 `;
 
-const PBlock = styled.p`
-  font-weight: 400;
-`;
-
-const NextIconBlock = styled(NextIcon)`
-  path {
-    fill: ${({ theme }) => theme.colors.primary};
-  }
+const GreetBlock = styled.h2`
+  margin-bottom: 40px;
+  text-align: center;
+  font-size: ${({ theme }) => theme.fontSize.headline2};
 `;

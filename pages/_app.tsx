@@ -1,20 +1,29 @@
+import { NextPage } from "next";
 import type { AppProps } from "next/app";
-import { useState } from "react";
 import { ThemeProvider } from "styled-components";
+import Layout from "@/components/Layout";
 
 import GlobalStyle from "styles/global-styles";
-import { darkTheme, lightTheme } from "styles/theme";
+import { defaultTheme } from "styles/theme";
 
-export default function App({ Component, pageProps }: AppProps) {
-  const [isDarkMode, setIsDarkMode] = useState(false);
-  return (
+export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
+  getLayout?: (page: React.ReactElement) => React.ReactNode;
+};
+
+type AppPropsWithLayout = AppProps & {
+  Component: NextPageWithLayout;
+};
+
+export default function App({ Component, pageProps }: AppPropsWithLayout) {
+  const getLayout = Component.getLayout ?? ((page) => page);
+
+  return getLayout(
     <>
       <GlobalStyle />
-      <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
-        <button onClick={() => setIsDarkMode(!isDarkMode)}>
-          {isDarkMode ? "라이트모드" : "다크모드"}
-        </button>
-        <Component {...pageProps} />
+      <ThemeProvider theme={defaultTheme}>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
       </ThemeProvider>
     </>
   );

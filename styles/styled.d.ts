@@ -3,7 +3,7 @@ import { ColorsTypes, FontSizeTypes, MediaQueryTypes } from "./theme";
 
 declare module "styled-components" {
   export interface DefaultTheme {
-    colors: ColorTypes;
+    colors: ColorsTypes;
     fontSize: FontSizeTypes;
     media: MediaQueryTypes;
   }
