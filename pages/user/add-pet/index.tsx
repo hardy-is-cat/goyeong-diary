@@ -1,7 +1,6 @@
 import { FormEvent, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
-import { addDoc, collection } from "firebase/firestore";
-import { storage } from "firebaseInit";
+import { auth } from "firebaseInit";
 import resizingImage from "util/resizingImage";
 import fetchImgbb from "util/fetchImgbb";
 import styled from "styled-components";
@@ -9,6 +8,8 @@ import styled from "styled-components";
 import Button from "@/components/Button";
 import Input from "@/components/Input";
 import PageTitle from "@/components/PageTitle";
+import { updateProfile } from "firebase/auth";
+import { updateCatsCollection, updateUsersCollection } from "util/firebaseFunc";
 
 function AddPetIndex() {
   const [name, setName] = useState("");
@@ -65,15 +66,14 @@ function AddPetIndex() {
     }
 
     // firebase 업로드
-    const catsCollectionRef = collection(storage, "cats");
-    await addDoc(catsCollectionRef, {
+    const user = auth.currentUser;
+    updateProfile(user!, { photoURL: imgbbThumbUrl });
+    await updateCatsCollection({
       name,
       birth,
       thumb: imgbbThumbUrl || "https://i.ibb.co/Kc6tjcX5/default-profile.png",
-      // user: []
-    }).catch((error) => {
-      console.error("저장 중 오류 발생!", error);
-    });
+      user: [user!.uid],
+    }).then(async (catId) => await updateUsersCollection(catId!));
 
     alert("내새꾸 등록이 완료됐습니다!");
     router.push("/");

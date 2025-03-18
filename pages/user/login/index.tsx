@@ -1,25 +1,42 @@
-import { ReactElement, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/router";
-import { auth } from "firebaseInit";
-import { signInWithEmailAndPassword } from "firebase/auth";
 import Link from "next/link";
+import { auth, storage } from "firebaseInit";
+import { signInWithEmailAndPassword, UserCredential } from "firebase/auth";
 import styled from "styled-components";
+import { useSetRecoilState } from "recoil";
+import { isLoggedInState, userInfoState } from "util/atoms";
 
 import Button from "@/components/Button";
 import Input from "@/components/Input";
-import PageTitle from "@/components/PageTitle";
+import { doc, getDoc } from "firebase/firestore";
 
 function LoginIndex() {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const setUserInfo = useSetRecoilState(userInfoState);
+  const setIsLoggedIn = useSetRecoilState(isLoggedInState);
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
 
     signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        router.push("/");
+      .then(async (userCredential) => {
+        setUserInfo({
+          displayName: userCredential.user.displayName,
+          uid: userCredential.user.uid,
+        });
+        setIsLoggedIn(true);
+        // user 컬렉션 내부의 uid 문서에서 pet 배열이 비어있으면 펫 등록 페이지로 이동
+        const docRef = doc(storage, "users", userCredential.user.uid);
+        const docSnap = await getDoc(docRef);
+        const userData = docSnap.data();
+        if (userData?.pet.length === 0) {
+          router.push("/user/add-pet");
+        } else {
+          router.push("/");
+        }
       })
       .catch((error) => {
         const errorCode = error.code;
