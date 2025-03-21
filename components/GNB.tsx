@@ -14,14 +14,14 @@ function GNB() {
           <HomeIcon />홈
         </Link>
       </li>
-      <li>
+      {/* <li>
         <Link href="#">
           <HospitalIcon />
           병원찾기
         </Link>
-      </li>
+      </li> */}
       <li>
-        <Link href="#">
+        <Link href="/diary">
           <CalendarIcon />
           기록
         </Link>

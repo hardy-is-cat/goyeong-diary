@@ -24,7 +24,7 @@ function PageTitle() {
       case "/hospital":
         title = "내주변 병원";
         break;
-      case "/calendar":
+      case "/diary":
         title = "기록 확인";
         break;
       case "/user/add-pet":
