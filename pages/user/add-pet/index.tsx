@@ -1,13 +1,14 @@
 import { FormEvent, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import { auth } from "firebaseInit";
-import resizingImage from "util/resizingImage";
-import fetchImgbb from "util/fetchImgbb";
-import styled from "styled-components";
 import { updateProfile } from "firebase/auth";
-import { updateCatsCollection, updateUsersCollection } from "util/firebaseFunc";
-import { useSetRecoilState } from "recoil";
-import { userInfoState } from "util/atoms";
+import styled from "styled-components";
+import resizingImage from "@/util/resizingImage";
+import fetchImgbb from "@/util/fetchImgbb";
+import {
+  updateCatsCollection,
+  updateUsersCollection,
+} from "@/util/firebaseFunc";
 
 import Button from "@/components/Button";
 import Input from "@/components/Input";
@@ -19,7 +20,6 @@ function AddPetIndex() {
   const [picFile, setPicFile] = useState<File | null>();
   const [resizingPicBlob, setResizingPicBlob] = useState<Blob | null>(null);
   const [resizingPicURL, setResizingPicURL] = useState("");
-  const setUserInfo = useSetRecoilState(userInfoState);
   const pictureRef = useRef<HTMLInputElement>(null);
 
   const router = useRouter();

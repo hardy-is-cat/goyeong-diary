@@ -5,8 +5,6 @@ import styled from "styled-components";
 import { auth, storage } from "firebaseInit";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
-import { useSetRecoilState } from "recoil";
-import { isLoggedInState, userInfoState } from "util/atoms";
 
 import Button from "@/components/Button";
 import Input from "@/components/Input";
@@ -15,8 +13,6 @@ function LoginIndex() {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const setUserInfo = useSetRecoilState(userInfoState);
-  const setIsLoggedIn = useSetRecoilState(isLoggedInState);
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
@@ -77,11 +73,7 @@ function LoginIndex() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <Button
-          type="submit"
-          onClick={handleLogin}
-          disabled={!email || !password}
-        >
+        <Button type="submit" disabled={!email || !password} filled>
           로그인
         </Button>
         <Link href="/user/signup">회원가입</Link>
@@ -92,7 +84,7 @@ function LoginIndex() {
 
 export default LoginIndex;
 
-const WrapperBlock = styled.div`
+const WrapperBlock = styled.main`
   display: flex;
   width: 100%;
   height: 100vh;
