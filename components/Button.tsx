@@ -52,6 +52,10 @@ const ButtonBlock = styled.button<{
     css`
       border: 1px solid ${theme.colors.error};
       color: ${theme.colors.error};
+      &:hover {
+        background-color: ${theme.colors.error};
+        color: white;
+      }
     `}
 
   ${({ $filled, theme }) =>

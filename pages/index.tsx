@@ -25,6 +25,7 @@ export default function Home() {
           alt="사용자 프로필사진"
           width={180}
           height={180}
+          priority={true}
         />
       </MyCatPicBlock>
       <GreetBlock>

@@ -1,17 +1,21 @@
 "use client";
 
-import { ReactElement, useRef, useState } from "react";
+import { FormEvent, ReactElement, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
+import { NextPageWithLayout } from "pages/_app";
+import { useCurrentTime } from "@/util/hooks/useCurrentTime";
+import { PlayingData } from "@/util/types";
+import { uploadData } from "@/util/firebaseFunc";
 
 import Button from "@/components/Button";
 import DateInput from "@/components/DateInput";
 import TitleLayout from "@/components/TitleLayout";
-import { NextPageWithLayout } from "pages/_app";
 
 const PlayingIndex: NextPageWithLayout = () => {
-  const [date, setDate] = useState("");
+  const { time, handleTime, updateCurrentTime } = useCurrentTime();
   const [stopWatchState, setStopWatchState] = useState(false);
   const [playTime, setPlayTime] = useState(0);
+  const [petId, setPetId] = useState("");
 
   const intervalRef = useRef<NodeJS.Timeout | undefined>(undefined);
 
@@ -44,15 +48,30 @@ const PlayingIndex: NextPageWithLayout = () => {
     }
   };
 
+  const uploadFeeding = (e: FormEvent) => {
+    e.preventDefault();
+
+    const data: PlayingData = {
+      date: time,
+      playTime: playTime,
+    };
+
+    uploadData(petId + "_" + time, data, "playing");
+  };
+
+  useEffect(() => {
+    setPetId(localStorage.getItem("pet")!);
+  }, []);
+
   return (
     <main>
-      <form action="#">
+      <form onSubmit={uploadFeeding}>
         <InputWrapper>
           <label htmlFor="date">현재 시간</label>
           <DateInput
-            name="date"
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
+            value={time}
+            onChange={handleTime}
+            onClick={updateCurrentTime}
           />
         </InputWrapper>
         <InputWrapper>
@@ -61,14 +80,16 @@ const PlayingIndex: NextPageWithLayout = () => {
             <Button onClick={handleStopWatch}>
               {stopWatchState ? "일시정지" : "시작"}
             </Button>
-            <Button onClick={resetStopWatch}>초기화</Button>
+            <Button onClick={resetStopWatch} warn>
+              초기화
+            </Button>
           </StopWatchButtonWrapper>
         </InputWrapper>
         <ResultBlock>
           총 {playTime >= 60 ? Math.floor(playTime / 60) : 0}분{" "}
           {playTime >= 60 ? playTime % 60 : playTime}초 동안 놀아줬어요!
         </ResultBlock>
-        <Button disabled={!date} filled={!!date}>
+        <Button type="submit" disabled={!time} filled={!!time}>
           등록하기
         </Button>
       </form>

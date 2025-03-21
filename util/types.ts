@@ -33,5 +33,5 @@ export type PlayingData = {
 export type VaccinationData = {
   date: string;
   valueOfVaccine: string;
-  memo?: string;
+  etcVaccine?: string;
 };

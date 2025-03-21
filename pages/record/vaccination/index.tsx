@@ -1,18 +1,22 @@
 "use client";
 
-import { ReactElement, useState } from "react";
+import { FormEvent, ReactElement, useEffect, useState } from "react";
 import styled from "styled-components";
+import { NextPageWithLayout } from "pages/_app";
+import { useCurrentTime } from "@/util/hooks/useCurrentTime";
+import { VaccinationData } from "@/util/types";
+import { uploadData } from "@/util/firebaseFunc";
 
 import Button from "@/components/Button";
 import DateInput from "@/components/DateInput";
 import Input from "@/components/Input";
 import TitleLayout from "@/components/TitleLayout";
-import { NextPageWithLayout } from "pages/_app";
 
 const VaccinationIndex: NextPageWithLayout = () => {
-  const [date, setDate] = useState("");
+  const { time, handleTime, updateCurrentTime } = useCurrentTime();
   const [valueOfVaccine, setValueOfVaccine] = useState("");
   const [etcVaccine, setEtcVaccine] = useState("");
+  const [petId, setPetId] = useState("");
 
   const handleValueOfVaccine = (e: React.ChangeEvent<HTMLSelectElement>) => {
     if (valueOfVaccine !== "etc") {
@@ -27,15 +31,31 @@ const VaccinationIndex: NextPageWithLayout = () => {
     setEtcVaccine(e.target.value);
   };
 
+  const uploadVaccination = (e: FormEvent) => {
+    e.preventDefault();
+
+    const data: VaccinationData = {
+      date: time,
+      valueOfVaccine,
+      etcVaccine,
+    };
+
+    uploadData(petId + "_" + time, data, "vaccination");
+  };
+
+  useEffect(() => {
+    setPetId(localStorage.getItem("pet")!);
+  }, []);
+
   return (
     <main>
-      <form action="#">
+      <form onSubmit={uploadVaccination}>
         <InputWrapper>
           <label htmlFor="date">현재 시간</label>
           <DateInput
-            name="date"
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
+            value={time}
+            onChange={handleTime}
+            onClick={updateCurrentTime}
           />
         </InputWrapper>
         <InputWrapper>
@@ -66,7 +86,7 @@ const VaccinationIndex: NextPageWithLayout = () => {
             )}
           </div>
         </InputWrapper>
-        <Button disabled={!date} filled={!!date}>
+        <Button type="submit" disabled={!time} filled={!!time}>
           등록하기
         </Button>
       </form>
