@@ -14,7 +14,6 @@ export function useCurrentTime() {
       now.getMinutes() < 10 ? "0" + now.getMinutes() : now.getMinutes();
 
     const formattedTime = `${year}-${month}-${date}T${hours}:${minutes}`;
-    console.log(formattedTime);
     setTime(formattedTime);
   };
 
