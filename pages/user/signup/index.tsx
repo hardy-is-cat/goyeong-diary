@@ -5,7 +5,7 @@ import {
   updateProfile,
   UserCredential,
 } from "firebase/auth";
-import { addDoc, collection, doc, setDoc } from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
 import { auth, storage } from "firebaseInit";
 import { useRouter } from "next/router";
 import { useState } from "react";
@@ -33,7 +33,7 @@ function SignUpIndex() {
     await setDoc(userDocRef, {
       uid,
       displayName: nickname,
-      pet: [],
+      pet: "",
     });
   };
 
@@ -43,6 +43,7 @@ function SignUpIndex() {
         const user = userCredential.user;
         updateProfile(user, {
           displayName: nickname,
+          photoURL: "https://i.ibb.co/Kc6tjcX5/default-profile.png",
         });
         addFirebaseUserInfo(userCredential, nickname);
         alert(`환영합니다 ${nickname}님!`);

@@ -13,8 +13,9 @@ function SettingIndex() {
 
   const handleLogout = () => {
     signOut(auth);
-    setUserInfoState({});
-    setIsLoggedInState(false);
+    // setUserInfoState({});
+    // setIsLoggedInState(false);
+    localStorage.clear();
     alert("로그아웃되었습니다!");
     router.push("/user/login");
   };
