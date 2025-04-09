@@ -27,7 +27,7 @@ function GNB() {
         </Link>
       </li>
       <li>
-        <Link href="/setting">
+        <Link href="/user/mypage">
           <SettingIcon />
           설정
         </Link>
@@ -40,9 +40,11 @@ export default GNB;
 
 const GNBBlock = styled.ul`
   position: fixed;
-  left: 0;
+  left: 50%;
   bottom: 0;
+  transform: translateX(-50%);
   width: 100%;
+  max-width: 430px;
   height: 80px;
   display: flex;
   justify-content: space-between;
@@ -51,7 +53,7 @@ const GNBBlock = styled.ul`
   background-color: white;
 
   li {
-    width: 25%;
+    width: 33.33%;
     text-align: center;
 
     svg {

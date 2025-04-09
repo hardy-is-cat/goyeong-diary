@@ -18,7 +18,7 @@ export default function Home() {
   }, []);
 
   return (
-    <main>
+    <>
       <MyCatPicBlock>
         <Image
           src={photoURL || "https://i.ibb.co/Kc6tjcX5/default-profile.png"}
@@ -34,7 +34,7 @@ export default function Home() {
         오늘은 무엇을 함께 했나요?
       </GreetBlock>
       <MainMenu />
-    </main>
+    </>
   );
 }
 

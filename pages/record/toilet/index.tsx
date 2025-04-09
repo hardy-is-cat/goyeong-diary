@@ -45,43 +45,41 @@ const ToiletIndex: NextPageWithLayout = () => {
   }, []);
 
   return (
-    <main>
-      <form onSubmit={uploadToilet}>
-        <InputWrapper>
-          <label htmlFor="date">시간</label>
-          <DateInput
-            value={time}
-            onChange={handleTime}
-            onClick={updateCurrentTime}
+    <form onSubmit={uploadToilet}>
+      <InputWrapper>
+        <label htmlFor="date">시간</label>
+        <DateInput
+          value={time}
+          onChange={handleTime}
+          onClick={updateCurrentTime}
+        />
+      </InputWrapper>
+      <InputWrapper>
+        <label htmlFor="pees">감자</label>
+        <QuantityInput quantity={pees} handleQuantity={handlePees} />
+      </InputWrapper>
+      <InputWrapper>
+        <label htmlFor="poops">맛동산</label>
+        <QuantityInput quantity={poops} handleQuantity={handlePoops} />
+      </InputWrapper>
+      <InputWrapper>
+        <label htmlFor="memo">특이사항</label>
+        <div>
+          <textarea
+            placeholder="특이사항을 메모해보세요."
+            value={etcMemo}
+            onChange={(e) => setEtcMemo(e.target.value)}
           />
-        </InputWrapper>
-        <InputWrapper>
-          <label htmlFor="pees">감자</label>
-          <QuantityInput quantity={pees} handleQuantity={handlePees} />
-        </InputWrapper>
-        <InputWrapper>
-          <label htmlFor="poops">맛동산</label>
-          <QuantityInput quantity={poops} handleQuantity={handlePoops} />
-        </InputWrapper>
-        <InputWrapper>
-          <label htmlFor="memo">특이사항</label>
-          <div>
-            <textarea
-              placeholder="특이사항을 메모해보세요."
-              value={etcMemo}
-              onChange={(e) => setEtcMemo(e.target.value)}
-            />
-          </div>
-        </InputWrapper>
-        <Button
-          type="submit"
-          disabled={!time || (!pees && !poops)}
-          filled={!!time && (!!pees || !!poops)}
-        >
-          등록하기
-        </Button>
-      </form>
-    </main>
+        </div>
+      </InputWrapper>
+      <Button
+        type="submit"
+        disabled={!time || (!pees && !poops)}
+        filled={!!time && (!!pees || !!poops)}
+      >
+        등록하기
+      </Button>
+    </form>
   );
 };
 
