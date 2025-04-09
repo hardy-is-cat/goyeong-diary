@@ -64,36 +64,34 @@ const PlayingIndex: NextPageWithLayout = () => {
   }, []);
 
   return (
-    <main>
-      <form onSubmit={uploadFeeding}>
-        <InputWrapper>
-          <label htmlFor="date">현재 시간</label>
-          <DateInput
-            value={time}
-            onChange={handleTime}
-            onClick={updateCurrentTime}
-          />
-        </InputWrapper>
-        <InputWrapper>
-          <label htmlFor="time">스톱워치</label>
-          <StopWatchButtonWrapper>
-            <Button onClick={handleStopWatch}>
-              {stopWatchState ? "일시정지" : "시작"}
-            </Button>
-            <Button onClick={resetStopWatch} warn>
-              초기화
-            </Button>
-          </StopWatchButtonWrapper>
-        </InputWrapper>
-        <ResultBlock>
-          총 {playTime >= 60 ? Math.floor(playTime / 60) : 0}분{" "}
-          {playTime >= 60 ? playTime % 60 : playTime}초 동안 놀아줬어요!
-        </ResultBlock>
-        <Button type="submit" disabled={!time} filled={!!time}>
-          등록하기
-        </Button>
-      </form>
-    </main>
+    <form onSubmit={uploadFeeding}>
+      <InputWrapper>
+        <label htmlFor="date">현재 시간</label>
+        <DateInput
+          value={time}
+          onChange={handleTime}
+          onClick={updateCurrentTime}
+        />
+      </InputWrapper>
+      <InputWrapper>
+        <label htmlFor="time">스톱워치</label>
+        <StopWatchButtonWrapper>
+          <Button onClick={handleStopWatch}>
+            {stopWatchState ? "일시정지" : "시작"}
+          </Button>
+          <Button onClick={resetStopWatch} warn>
+            초기화
+          </Button>
+        </StopWatchButtonWrapper>
+      </InputWrapper>
+      <ResultBlock>
+        총 {playTime >= 60 ? Math.floor(playTime / 60) : 0}분{" "}
+        {playTime >= 60 ? playTime % 60 : playTime}초 동안 놀아줬어요!
+      </ResultBlock>
+      <Button type="submit" disabled={!time} filled={!!time}>
+        등록하기
+      </Button>
+    </form>
   );
 };
 

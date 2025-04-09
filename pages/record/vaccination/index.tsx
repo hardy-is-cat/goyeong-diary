@@ -9,27 +9,13 @@ import { uploadData } from "@/util/firebaseFunc";
 
 import Button from "@/components/Button";
 import DateInput from "@/components/DateInput";
-import Input from "@/components/Input";
 import TitleLayout from "@/components/TitleLayout";
 
 const VaccinationIndex: NextPageWithLayout = () => {
   const { time, handleTime, updateCurrentTime } = useCurrentTime();
   const [valueOfVaccine, setValueOfVaccine] = useState("");
-  const [etcVaccine, setEtcVaccine] = useState("");
+  const [etcMemo, setEtcMemo] = useState("");
   const [petId, setPetId] = useState("");
-
-  const handleValueOfVaccine = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    if (valueOfVaccine !== "etc") {
-      setEtcVaccine("");
-      setValueOfVaccine(e.target.value);
-    } else {
-      setValueOfVaccine(e.target.value);
-    }
-  };
-
-  const handleEtcVaccine = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEtcVaccine(e.target.value);
-  };
 
   const uploadVaccination = (e: FormEvent) => {
     e.preventDefault();
@@ -37,7 +23,7 @@ const VaccinationIndex: NextPageWithLayout = () => {
     const data: VaccinationData = {
       date: time,
       valueOfVaccine,
-      etcVaccine,
+      etcVaccine: etcMemo,
     };
 
     uploadData(petId + "_" + time, data, "vaccination");
@@ -48,49 +34,46 @@ const VaccinationIndex: NextPageWithLayout = () => {
   }, []);
 
   return (
-    <main>
-      <form onSubmit={uploadVaccination}>
-        <InputWrapper>
-          <label htmlFor="date">현재 시간</label>
-          <DateInput
-            value={time}
-            onChange={handleTime}
-            onClick={updateCurrentTime}
-          />
-        </InputWrapper>
-        <InputWrapper>
-          <label htmlFor="value-of-vaccine">접종 종류</label>
-          <div>
-            <select
-              defaultValue="default"
-              name="value-of-vaccine"
-              required
-              onChange={handleValueOfVaccine}
-            >
-              <option value="default" disabled>
-                백신 종류를 선택해주세요
-              </option>
-              <option value="di-vac">심장사상충</option>
-              <option value="total-vac">종합백신</option>
-              <option value="fpv-vac">범백</option>
-              <option value="etc">기타</option>
-            </select>
-            {valueOfVaccine === "etc" && (
-              <Input
-                type="text"
-                placeholder="기타 백신의 이름을 적어주세요."
-                style={{ marginTop: "10px" }}
-                value={etcVaccine}
-                onChange={handleEtcVaccine}
-              />
-            )}
-          </div>
-        </InputWrapper>
-        <Button type="submit" disabled={!time} filled={!!time}>
-          등록하기
-        </Button>
-      </form>
-    </main>
+    <form onSubmit={uploadVaccination}>
+      <InputWrapper>
+        <label htmlFor="date">현재 시간</label>
+        <DateInput
+          value={time}
+          onChange={handleTime}
+          onClick={updateCurrentTime}
+        />
+      </InputWrapper>
+      <InputWrapper>
+        <label htmlFor="value-of-vaccine">접종 종류</label>
+        <div>
+          <select
+            defaultValue="default"
+            name="value-of-vaccine"
+            required
+            onChange={(e) => setValueOfVaccine(e.target.value)}
+          >
+            <option value="default" disabled>
+              백신 종류를 선택해주세요
+            </option>
+            <option value="di-vac">심장사상충</option>
+            <option value="total-vac">종합백신</option>
+            <option value="fpv-vac">범백</option>
+            <option value="etc">기타</option>
+          </select>
+        </div>
+      </InputWrapper>
+      <InputWrapper>
+        <label htmlFor="memo">특이사항</label>
+        <textarea
+          placeholder="특이사항을 메모해보세요."
+          value={etcMemo}
+          onChange={(e) => setEtcMemo(e.target.value)}
+        />
+      </InputWrapper>
+      <Button type="submit" disabled={!time} filled={!!time}>
+        등록하기
+      </Button>
+    </form>
   );
 };
 
