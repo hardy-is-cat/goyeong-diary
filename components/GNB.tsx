@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import Link from "next/link";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
 import HomeIcon from "/public/images/icons/icon-home.svg";
 import HospitalIcon from "/public/images/icons/icon-hospital.svg";
@@ -7,6 +9,16 @@ import CalendarIcon from "/public/images/icons/icon-calendar.svg";
 import SettingIcon from "/public/images/icons/icon-setting.svg";
 
 function GNB() {
+  const [userHavePet, setUserHavePet] = useState(false);
+
+  useEffect(() => {
+    setUserHavePet(!!localStorage.getItem("pet"));
+  });
+
+  if (!userHavePet) {
+    return null;
+  }
+
   return (
     <GNBBlock>
       <li>

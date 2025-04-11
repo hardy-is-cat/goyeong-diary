@@ -44,6 +44,10 @@ function PageTitle() {
 export default PageTitle;
 
 const H1Block = styled.h1`
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
   width: 100%;
   max-width: 430px;
   margin: 0 auto;

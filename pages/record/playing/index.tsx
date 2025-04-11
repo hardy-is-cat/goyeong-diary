@@ -64,34 +64,36 @@ const PlayingIndex: NextPageWithLayout = () => {
   }, []);
 
   return (
-    <form onSubmit={uploadFeeding}>
-      <InputWrapper>
-        <label htmlFor="date">현재 시간</label>
-        <DateInput
-          value={time}
-          onChange={handleTime}
-          onClick={updateCurrentTime}
-        />
-      </InputWrapper>
-      <InputWrapper>
-        <label htmlFor="time">스톱워치</label>
-        <StopWatchButtonWrapper>
-          <Button onClick={handleStopWatch}>
-            {stopWatchState ? "일시정지" : "시작"}
-          </Button>
-          <Button onClick={resetStopWatch} warn>
-            초기화
-          </Button>
-        </StopWatchButtonWrapper>
-      </InputWrapper>
-      <ResultBlock>
-        총 {playTime >= 60 ? Math.floor(playTime / 60) : 0}분{" "}
-        {playTime >= 60 ? playTime % 60 : playTime}초 동안 놀아줬어요!
-      </ResultBlock>
-      <Button type="submit" disabled={!time} filled={!!time}>
-        등록하기
-      </Button>
-    </form>
+    <MainWrapper>
+      <form onSubmit={uploadFeeding}>
+        <InputWrapper>
+          <label htmlFor="date">현재 시간</label>
+          <DateInput
+            value={time}
+            onChange={handleTime}
+            onClick={updateCurrentTime}
+          />
+        </InputWrapper>
+        <InputWrapper>
+          <label htmlFor="time">스톱워치</label>
+          <StopWatchButtonWrapper>
+            <Button onClick={handleStopWatch}>
+              {stopWatchState ? "일시정지" : "시작"}
+            </Button>
+            <Button onClick={resetStopWatch} warn>
+              초기화
+            </Button>
+          </StopWatchButtonWrapper>
+        </InputWrapper>
+        <ResultBlock>
+          총 {playTime >= 60 ? Math.floor(playTime / 60) : 0}분{" "}
+          {playTime >= 60 ? playTime % 60 : playTime}초 동안 놀아줬어요!
+        </ResultBlock>
+        <Button type="submit" disabled={!time} filled={!!time}>
+          등록하기
+        </Button>
+      </form>
+    </MainWrapper>
   );
 };
 
@@ -100,6 +102,15 @@ export default PlayingIndex;
 PlayingIndex.getLayout = function getLayout(page: ReactElement) {
   return <TitleLayout>{page}</TitleLayout>;
 };
+
+const MainWrapper = styled.main`
+  max-width: 430px;
+  min-height: 100vh;
+  padding: 80px 30px;
+  margin: 0 auto;
+  background-color: #fff;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+`;
 
 const InputWrapper = styled.div`
   display: flex;
