@@ -1,7 +1,12 @@
 import Button from "@/components/Button";
 import Input from "@/components/Input";
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { auth } from "firebaseInit";
+import {
+  createUserWithEmailAndPassword,
+  updateProfile,
+  UserCredential,
+} from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
+import { auth, storage } from "firebaseInit";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import styled from "styled-components";
@@ -19,13 +24,28 @@ function SignUpIndex() {
   const REG_EMAIL = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   const REG_PASSWORD = /^[A-Za-z\d!@#$%^&*]{8,}$/;
 
+  const addFirebaseUserInfo = async (
+    userCredential: UserCredential,
+    nickname: string
+  ) => {
+    const { uid } = userCredential.user;
+    const userDocRef = doc(storage, "users", uid);
+    await setDoc(userDocRef, {
+      uid,
+      displayName: nickname,
+      pet: "",
+    });
+  };
+
   const handleSignUp = () => {
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
         updateProfile(user, {
           displayName: nickname,
+          photoURL: "https://i.ibb.co/Kc6tjcX5/default-profile.png",
         });
+        addFirebaseUserInfo(userCredential, nickname);
         alert(`환영합니다 ${nickname}님!`);
         router.push("/user/login");
       })

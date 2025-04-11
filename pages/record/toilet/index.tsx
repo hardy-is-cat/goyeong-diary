@@ -1,19 +1,23 @@
 "use client";
 
-import { ReactElement, useState } from "react";
+import { FormEvent, ReactElement, useEffect, useState } from "react";
 import styled from "styled-components";
+import { NextPageWithLayout } from "pages/_app";
+import { useCurrentTime } from "util/hooks/useCurrentTime";
 
 import Button from "@/components/Button";
 import DateInput from "@/components/DateInput";
 import QuantityInput from "@/components/QuantityInput";
 import TitleLayout from "@/components/TitleLayout";
-import { NextPageWithLayout } from "pages/_app";
+import { uploadData } from "util/firebaseFunc";
+import { ToiletData } from "@/util/types";
 
 const ToiletIndex: NextPageWithLayout = () => {
-  const [date, setDate] = useState("");
+  const { time, handleTime, updateCurrentTime } = useCurrentTime();
   const [pees, setPees] = useState(0);
   const [poops, setPoops] = useState(0);
   const [etcMemo, setEtcMemo] = useState("");
+  const [petId, setPetId] = useState("");
 
   const handlePees = (num: number) => {
     setPees(pees + num);
@@ -23,44 +27,59 @@ const ToiletIndex: NextPageWithLayout = () => {
     setPoops(poops + num);
   };
 
+  const uploadToilet = (e: FormEvent) => {
+    e.preventDefault();
+
+    const data: ToiletData = {
+      date: time,
+      pees: pees,
+      poops: poops,
+      memo: etcMemo,
+    };
+
+    uploadData(petId + "_" + time, data, "toilet");
+  };
+
+  useEffect(() => {
+    setPetId(localStorage.getItem("pet")!);
+  }, []);
+
   return (
-    <main>
-      <form action="#">
-        <InputWrapper>
-          <label htmlFor="date">현재 시간</label>
-          <DateInput
-            name="date"
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
+    <form onSubmit={uploadToilet}>
+      <InputWrapper>
+        <label htmlFor="date">시간</label>
+        <DateInput
+          value={time}
+          onChange={handleTime}
+          onClick={updateCurrentTime}
+        />
+      </InputWrapper>
+      <InputWrapper>
+        <label htmlFor="pees">감자</label>
+        <QuantityInput quantity={pees} handleQuantity={handlePees} />
+      </InputWrapper>
+      <InputWrapper>
+        <label htmlFor="poops">맛동산</label>
+        <QuantityInput quantity={poops} handleQuantity={handlePoops} />
+      </InputWrapper>
+      <InputWrapper>
+        <label htmlFor="memo">특이사항</label>
+        <div>
+          <textarea
+            placeholder="특이사항을 메모해보세요."
+            value={etcMemo}
+            onChange={(e) => setEtcMemo(e.target.value)}
           />
-        </InputWrapper>
-        <InputWrapper>
-          <label htmlFor="pees">감자</label>
-          <QuantityInput quantity={pees} handleQuantity={handlePees} />
-        </InputWrapper>
-        <InputWrapper>
-          <label htmlFor="poops">맛동산</label>
-          <QuantityInput quantity={poops} handleQuantity={handlePoops} />
-        </InputWrapper>
-        <InputWrapper>
-          <label htmlFor="memo">특이사항</label>
-          <div>
-            <textarea
-              placeholder="특이사항을 메모해보세요."
-              value={etcMemo}
-              onChange={(e) => setEtcMemo(e.target.value)}
-            />
-            <Button>사진등록</Button>
-          </div>
-        </InputWrapper>
-        <Button
-          disabled={!date || (!pees && !poops)}
-          filled={!!date && (!!pees || !!poops)}
-        >
-          등록하기
-        </Button>
-      </form>
-    </main>
+        </div>
+      </InputWrapper>
+      <Button
+        type="submit"
+        disabled={!time || (!pees && !poops)}
+        filled={!!time && (!!pees || !!poops)}
+      >
+        등록하기
+      </Button>
+    </form>
   );
 };
 

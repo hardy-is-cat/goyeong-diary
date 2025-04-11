@@ -24,7 +24,7 @@ function PageTitle() {
       case "/hospital":
         title = "내주변 병원";
         break;
-      case "/calendar":
+      case "/diary":
         title = "기록 확인";
         break;
       case "/user/add-pet":
@@ -44,6 +44,9 @@ function PageTitle() {
 export default PageTitle;
 
 const H1Block = styled.h1`
+  width: 100%;
+  max-width: 430px;
+  margin: 0 auto;
   color: white;
   background-color: ${({ theme }) => theme.colors.primary};
   font-size: ${({ theme }) => theme.fontSize.headline3};
