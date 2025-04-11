@@ -58,7 +58,7 @@ function LoginIndex() {
   };
 
   return (
-    <WrapperBlock>
+    <>
       <H1Block>로그인</H1Block>
       <LoginBlock onSubmit={handleLogin}>
         <Input
@@ -78,7 +78,7 @@ function LoginIndex() {
         </Button>
         <Link href="/user/signup">회원가입</Link>
       </LoginBlock>
-    </WrapperBlock>
+    </>
   );
 }
 
