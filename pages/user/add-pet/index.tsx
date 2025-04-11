@@ -101,60 +101,71 @@ function AddPetIndex() {
   return (
     <>
       <PageTitle />
-      <FormWrapper onSubmit={uploadPet}>
-        <InputWrapper>
-          <label htmlFor="name">이름</label>
-          <Input
-            id="name"
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-        </InputWrapper>
-        <InputWrapper>
-          <label htmlFor="date">생일</label>
-          <input
-            type="date"
-            name="date"
-            value={birth}
-            onChange={(e) => setBirth(e.target.value)}
-          />
-        </InputWrapper>
-        <InputWrapper>
-          <label htmlFor="pet-profile">사진</label>
-          <Button
-            className="input-picture-button"
-            filled
-            onClick={handleFileInput}
-          >
-            {resizingPicURL ? "삭제하기" : "사진 업로드"}
+      <MainWrapper>
+        <form onSubmit={uploadPet}>
+          <InputWrapper>
+            <label htmlFor="name">이름</label>
+            <Input
+              id="name"
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+          </InputWrapper>
+          <InputWrapper>
+            <label htmlFor="date">생일</label>
+            <input
+              type="date"
+              name="date"
+              value={birth}
+              onChange={(e) => setBirth(e.target.value)}
+            />
+          </InputWrapper>
+          <InputWrapper>
+            <label htmlFor="pet-profile">사진</label>
+            <Button
+              className="input-picture-button"
+              filled
+              onClick={handleFileInput}
+            >
+              {resizingPicURL ? "삭제하기" : "사진 업로드"}
+            </Button>
+            <Input
+              type="file"
+              name="pet-profile"
+              onChange={selectPicture}
+              accept="image/*"
+              capture="environment"
+              ref={pictureRef}
+              style={{ display: "none" }}
+            />
+          </InputWrapper>
+          {resizingPicURL && (
+            <>
+              <PreviewBlock>
+                <img src={resizingPicURL} alt="프로필 사진 프리뷰" />
+              </PreviewBlock>
+            </>
+          )}
+          <Button type="submit" filled disabled={!name || !birth}>
+            등록
           </Button>
-          <Input
-            type="file"
-            name="pet-profile"
-            onChange={selectPicture}
-            accept="image/*"
-            capture="environment"
-            ref={pictureRef}
-            style={{ display: "none" }}
-          />
-        </InputWrapper>
-        {resizingPicURL && (
-          <>
-            <PreviewBlock>
-              <img src={resizingPicURL} alt="프로필 사진 프리뷰" />
-            </PreviewBlock>
-          </>
-        )}
-        <Button type="submit" filled disabled={!name || !birth}>
-          등록
-        </Button>
-      </FormWrapper>
+        </form>
+      </MainWrapper>
     </>
   );
 }
 
 export default AddPetIndex;
+
+const MainWrapper = styled.main`
+  max-width: 430px;
+  min-height: 100vh;
+  padding: 80px 30px;
+  margin: 0 auto;
+  background-color: #fff;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+`;
 
 const InputWrapper = styled.div`
   display: flex;
@@ -178,10 +189,6 @@ const InputWrapper = styled.div`
     width: 80px;
     margin-top: 12px;
   }
-`;
-
-const FormWrapper = styled.form`
-  margin: 20px 30px;
 `;
 
 const PreviewBlock = styled.div`

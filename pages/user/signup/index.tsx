@@ -94,7 +94,7 @@ function SignUpIndex() {
   };
 
   return (
-    <main>
+    <MainWrapper>
       <form>
         <InputBlock>
           <label htmlFor="signup-email">이메일</label>
@@ -187,20 +187,38 @@ function SignUpIndex() {
           회원가입
         </Button>
       </form>
-    </main>
+    </MainWrapper>
   );
 }
 
 export default SignUpIndex;
 
+const MainWrapper = styled.main`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-width: 430px;
+  min-height: 100vh;
+  padding: 80px 30px;
+  margin: 0 auto;
+  background-color: #fff;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+
+  form {
+    width: 100%;
+  }
+`;
+
 const InputBlock = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  margin-bottom: 4px;
+  margin-bottom: 12px;
 
   label {
     width: 100px;
+    flex-shrink: 0;
   }
 
   & > div {

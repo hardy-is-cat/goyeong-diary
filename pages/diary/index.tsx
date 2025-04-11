@@ -32,7 +32,7 @@ const DiaryIndex: NextPageWithLayout = () => {
   }, [selectedMenu]);
 
   return (
-    <>
+    <MainWrapper>
       <TabMenuWrapper>
         <Button
           filled={selectedMenu === "toilet"}
@@ -60,7 +60,7 @@ const DiaryIndex: NextPageWithLayout = () => {
         </Button>
       </TabMenuWrapper>
       <DiaryTable selectedMenu={selectedMenu} data={data} />
-    </>
+    </MainWrapper>
   );
 };
 
@@ -69,6 +69,15 @@ export default DiaryIndex;
 DiaryIndex.getLayout = function getLayout(page: ReactElement) {
   return <TitleLayout>{page}</TitleLayout>;
 };
+
+const MainWrapper = styled.main`
+  max-width: 430px;
+  min-height: 100vh;
+  padding: 80px 30px;
+  margin: 0 auto;
+  background-color: #fff;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+`;
 
 const TabMenuWrapper = styled.div`
   width: 100%;

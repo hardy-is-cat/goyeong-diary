@@ -34,46 +34,48 @@ const VaccinationIndex: NextPageWithLayout = () => {
   }, []);
 
   return (
-    <form onSubmit={uploadVaccination}>
-      <InputWrapper>
-        <label htmlFor="date">현재 시간</label>
-        <DateInput
-          value={time}
-          onChange={handleTime}
-          onClick={updateCurrentTime}
-        />
-      </InputWrapper>
-      <InputWrapper>
-        <label htmlFor="value-of-vaccine">접종 종류</label>
-        <div>
-          <select
-            defaultValue="default"
-            name="value-of-vaccine"
-            required
-            onChange={(e) => setValueOfVaccine(e.target.value)}
-          >
-            <option value="default" disabled>
-              백신 종류를 선택해주세요
-            </option>
-            <option value="di-vac">심장사상충</option>
-            <option value="total-vac">종합백신</option>
-            <option value="fpv-vac">범백</option>
-            <option value="etc">기타</option>
-          </select>
-        </div>
-      </InputWrapper>
-      <InputWrapper>
-        <label htmlFor="memo">특이사항</label>
-        <textarea
-          placeholder="특이사항을 메모해보세요."
-          value={etcMemo}
-          onChange={(e) => setEtcMemo(e.target.value)}
-        />
-      </InputWrapper>
-      <Button type="submit" disabled={!time} filled={!!time}>
-        등록하기
-      </Button>
-    </form>
+    <MainWrapper>
+      <form onSubmit={uploadVaccination}>
+        <InputWrapper>
+          <label htmlFor="date">현재 시간</label>
+          <DateInput
+            value={time}
+            onChange={handleTime}
+            onClick={updateCurrentTime}
+          />
+        </InputWrapper>
+        <InputWrapper>
+          <label htmlFor="value-of-vaccine">접종 종류</label>
+          <div>
+            <select
+              defaultValue="default"
+              name="value-of-vaccine"
+              required
+              onChange={(e) => setValueOfVaccine(e.target.value)}
+            >
+              <option value="default" disabled>
+                백신 종류를 선택해주세요
+              </option>
+              <option value="di-vac">심장사상충</option>
+              <option value="total-vac">종합백신</option>
+              <option value="fpv-vac">범백</option>
+              <option value="etc">기타</option>
+            </select>
+          </div>
+        </InputWrapper>
+        <InputWrapper>
+          <label htmlFor="memo">특이사항</label>
+          <textarea
+            placeholder="특이사항을 메모해보세요."
+            value={etcMemo}
+            onChange={(e) => setEtcMemo(e.target.value)}
+          />
+        </InputWrapper>
+        <Button type="submit" disabled={!time} filled={!!time}>
+          등록하기
+        </Button>
+      </form>
+    </MainWrapper>
   );
 };
 
@@ -82,6 +84,15 @@ export default VaccinationIndex;
 VaccinationIndex.getLayout = function getLayout(page: ReactElement) {
   return <TitleLayout>{page}</TitleLayout>;
 };
+
+const MainWrapper = styled.main`
+  max-width: 430px;
+  min-height: 100vh;
+  padding: 80px 30px;
+  margin: 0 auto;
+  background-color: #fff;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+`;
 
 const InputWrapper = styled.div`
   display: flex;

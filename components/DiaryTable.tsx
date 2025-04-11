@@ -28,6 +28,11 @@ function DiaryTable({ selectedMenu, data }: DiaryDataType) {
               </tr>
             </thead>
             <tbody>
+              {data.length === 0 && (
+                <tr>
+                  <td colSpan={4}>데이터가 없습니다.</td>
+                </tr>
+              )}
               {data.map((doc) => {
                 return (
                   <tr key={"toilet" + doc.date}>
@@ -59,6 +64,11 @@ function DiaryTable({ selectedMenu, data }: DiaryDataType) {
               </tr>
             </thead>
             <tbody>
+              {data.length === 0 && (
+                <tr>
+                  <td colSpan={4}>데이터가 없습니다.</td>
+                </tr>
+              )}
               {data.map((doc) => {
                 return (
                   <tr key={"feeding" + doc.date}>
@@ -82,6 +92,11 @@ function DiaryTable({ selectedMenu, data }: DiaryDataType) {
               </tr>
             </thead>
             <tbody>
+              {data.length === 0 && (
+                <tr>
+                  <td colSpan={4}>데이터가 없습니다.</td>
+                </tr>
+              )}
               {data.map((doc) => {
                 return (
                   <tr key={"playing" + doc.date}>
@@ -110,6 +125,11 @@ function DiaryTable({ selectedMenu, data }: DiaryDataType) {
               </tr>
             </thead>
             <tbody>
+              {data.length === 0 && (
+                <tr>
+                  <td colSpan={4}>데이터가 없습니다.</td>
+                </tr>
+              )}
               {data.map((doc) => {
                 return (
                   <tr key={"vaccination" + doc.date}>

@@ -58,7 +58,7 @@ function LoginIndex() {
   };
 
   return (
-    <>
+    <MainWrapper>
       <H1Block>로그인</H1Block>
       <LoginBlock onSubmit={handleLogin}>
         <Input
@@ -78,25 +78,29 @@ function LoginIndex() {
         </Button>
         <Link href="/user/signup">회원가입</Link>
       </LoginBlock>
-    </>
+    </MainWrapper>
   );
 }
 
 export default LoginIndex;
 
-const WrapperBlock = styled.main`
+const MainWrapper = styled.main`
   display: flex;
-  width: 100%;
-  height: 100vh;
-  padding: 0 30px;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  max-width: 430px;
+  min-height: 100vh;
+  padding: 80px 30px;
+  margin: 0 auto;
+  background-color: #fff;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
 `;
 
 const H1Block = styled.h1`
   font-size: ${({ theme }) => theme.fontSize.headline1};
   margin-bottom: 20px;
+  text-align: center;
 `;
 
 const LoginBlock = styled.form`
