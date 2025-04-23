@@ -44,7 +44,7 @@ const MenuBlock = styled.ul`
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
-  margin: 0 auto;
+  margin: 0 auto 80px;
 
   li {
     width: calc(50% - 6px);

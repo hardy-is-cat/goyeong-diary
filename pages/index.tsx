@@ -51,7 +51,7 @@ export default function Home() {
 
 const MainWrapper = styled.main`
   max-width: 430px;
-  min-height: 100vh;
+  /* min-height: 100vh; */
   padding: 80px 30px;
   margin: 0 auto;
   background-color: #fff;
@@ -61,7 +61,7 @@ const MainWrapper = styled.main`
 const MyCatPicBlock = styled.div`
   width: 180px;
   height: 180px;
-  margin: 50px auto 20px;
+  margin: 0 auto 20px;
   background-color: gray;
   border-radius: 999px;
   overflow: hidden;
