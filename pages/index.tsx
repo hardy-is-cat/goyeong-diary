@@ -51,7 +51,7 @@ export default function Home() {
 
 const MainWrapper = styled.main`
   max-width: 430px;
-  /* min-height: 100vh; */
+  min-height: 100vh;
   padding: 80px 30px;
   margin: 0 auto;
   background-color: #fff;
