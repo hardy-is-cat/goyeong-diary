@@ -1,11 +1,11 @@
 import styled from "styled-components";
 
-interface InputType {
+interface InputType extends React.InputHTMLAttributes<HTMLInputElement> {
   quantity: number;
   handleQuantity: (num: number) => void;
 }
 
-function QuantityInput({ quantity, handleQuantity }: InputType) {
+function QuantityInput({ quantity, handleQuantity, ...props }: InputType) {
   return (
     <QuantityInputBlock>
       <DecreaseButton
@@ -16,7 +16,13 @@ function QuantityInput({ quantity, handleQuantity }: InputType) {
       >
         <span className="a11y-hidden">1개 감소</span>
       </DecreaseButton>
-      <input type="number" value={quantity} readOnly />
+      <input
+        type="number"
+        id={props.id}
+        name={props.name}
+        value={quantity}
+        readOnly
+      />
       <IncreaseButton type="button" onClick={() => handleQuantity(1)}>
         <span className="a11y-hidden">1개 증가</span>
       </IncreaseButton>

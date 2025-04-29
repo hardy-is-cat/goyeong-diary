@@ -69,6 +69,8 @@ const PlayingIndex: NextPageWithLayout = () => {
         <InputWrapper>
           <label htmlFor="date">현재 시간</label>
           <DateInput
+            id="date"
+            name="date"
             value={time}
             onChange={handleTime}
             onClick={updateCurrentTime}

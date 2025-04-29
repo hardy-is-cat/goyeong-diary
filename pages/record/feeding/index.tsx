@@ -46,6 +46,7 @@ const FeedingIndex: NextPageWithLayout = () => {
         <InputWrapper>
           <label htmlFor="date">현재 시간</label>
           <DateInput
+            id="date"
             name="date"
             value={time}
             onChange={handleTime}
@@ -56,6 +57,7 @@ const FeedingIndex: NextPageWithLayout = () => {
           <label htmlFor="type-of-feed">식사 종류</label>
           <div>
             <select
+              id="type-of-feed"
               name="type-of-feed"
               defaultValue="default"
               required
@@ -75,6 +77,7 @@ const FeedingIndex: NextPageWithLayout = () => {
           <label htmlFor="volume">양</label>
           <Input
             id="volume"
+            name="volume"
             type="number"
             placeholder="식사량을 기록하세요."
             value={volumeOfFeed}
@@ -86,6 +89,8 @@ const FeedingIndex: NextPageWithLayout = () => {
           <label htmlFor="memo">특이사항</label>
           <div>
             <textarea
+              id="memo"
+              name="memo"
               placeholder="특이사항을 메모해보세요."
               value={etcMemo}
               onChange={(e) => setEtcMemo(e.target.value)}

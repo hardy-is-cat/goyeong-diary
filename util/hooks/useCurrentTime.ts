@@ -13,7 +13,7 @@ export function getCurrentTime() {
 }
 
 export function useCurrentTime() {
-  const [time, setTime] = useState("");
+  const [time, setTime] = useState<string>("");
 
   const updateCurrentTime = () => {
     setTime(getCurrentTime());
