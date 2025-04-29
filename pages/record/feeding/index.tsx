@@ -27,6 +27,7 @@ const FeedingIndex: NextPageWithLayout = () => {
     e.preventDefault();
 
     const data: FeedingData = {
+      uid: petId + "_" + time,
       date: time,
       valueOfFeed,
       volumeOfFeed,

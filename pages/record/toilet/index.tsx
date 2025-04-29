@@ -32,6 +32,7 @@ const ToiletIndex: NextPageWithLayout = () => {
     e.preventDefault();
 
     const data: ToiletData = {
+      uid: petId + "_" + time,
       date: time,
       pees: pees,
       poops: poops,

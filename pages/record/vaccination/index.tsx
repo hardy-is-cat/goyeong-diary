@@ -21,6 +21,7 @@ const VaccinationIndex: NextPageWithLayout = () => {
     e.preventDefault();
 
     const data: VaccinationData = {
+      uid: petId + "_" + time,
       date: time,
       valueOfVaccine,
       etcVaccine: etcMemo,

@@ -52,6 +52,7 @@ const PlayingIndex: NextPageWithLayout = () => {
     e.preventDefault();
 
     const data: PlayingData = {
+      uid: petId + "_" + time,
       date: time,
       playTime: playTime,
     };

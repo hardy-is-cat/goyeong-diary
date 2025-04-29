@@ -55,7 +55,7 @@ function DiaryTable({ selectedMenu, data }: DiaryDataType) {
               ) : (
                 filteredData?.map((doc) => {
                   return (
-                    <tr key={"toilet" + doc.date}>
+                    <tr key={doc.uid}>
                       <td>{convertDate(doc.date)}</td>
                       <td>{doc.pees}</td>
                       <td>{doc.poops}</td>
@@ -92,7 +92,7 @@ function DiaryTable({ selectedMenu, data }: DiaryDataType) {
               ) : (
                 filteredData?.map((doc) => {
                   return (
-                    <tr key={"feeding" + doc.date}>
+                    <tr key={doc.uid}>
                       <td>{convertDate(doc.date)}</td>
                       <td>{listOfFeeding[doc.valueOfFeed]}</td>
                       <td>{doc.volumeOfFeed}g</td>
@@ -121,7 +121,7 @@ function DiaryTable({ selectedMenu, data }: DiaryDataType) {
               ) : (
                 filteredData?.map((doc) => {
                   return (
-                    <tr key={"playing" + doc.date}>
+                    <tr key={doc.uid}>
                       <td>{convertDate(doc.date)}</td>
                       <td>{convertPlayingTime(doc.playTime)}</td>
                     </tr>
@@ -155,7 +155,7 @@ function DiaryTable({ selectedMenu, data }: DiaryDataType) {
               ) : (
                 filteredData?.map((doc) => {
                   return (
-                    <tr key={"vaccination" + doc.date}>
+                    <tr key={doc.uid}>
                       <td>{convertDate(doc.date)}</td>
                       <td>{listOfVaccine[doc.valueOfVaccine]}</td>
                       <td>{doc.etcVaccine || "-"}</td>
