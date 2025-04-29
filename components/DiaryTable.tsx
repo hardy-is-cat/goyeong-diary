@@ -1,5 +1,7 @@
 import { convertDate } from "@/util/convertDate";
+import { getCurrentTime } from "@/util/hooks/useCurrentTime";
 import { DocumentData } from "firebase/firestore";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 
 type DiaryDataType = {
@@ -8,10 +10,28 @@ type DiaryDataType = {
 };
 
 function DiaryTable({ selectedMenu, data }: DiaryDataType) {
+  const [currentMonth, setCurrentMonth] = useState(
+    getCurrentTime().slice(0, 7)
+  );
+  const [filteredData, setFilteredData] = useState<
+    DocumentData[] | undefined
+  >();
+
   const convertPlayingTime = (time: string) => {
     const minutes = Math.floor(+time / 60);
     const seconds = minutes > 0 ? +time - minutes * 60 : +time;
     return minutes > 0 ? `${minutes}분 ${seconds}초` : `${seconds}초`;
+  };
+
+  const calcMinMaxMonth = (data: DocumentData[]) => {
+    const dates = data.map((doc) => doc.date);
+    const sortedDates: string[] = dates.sort((prev, curr) => {
+      return new Date(prev).getTime() - new Date(curr).getTime();
+    });
+    const minMonth = sortedDates[0].slice(0, 7);
+    // const maxMonth = sortedDates[sortedDates.length - 1].slice(0, 7);
+    const maxMonth = getCurrentTime().slice(0, 7);
+    return { minMonth, maxMonth };
   };
 
   const tableData = () => {
@@ -28,21 +48,22 @@ function DiaryTable({ selectedMenu, data }: DiaryDataType) {
               </tr>
             </thead>
             <tbody>
-              {data.length === 0 && (
+              {filteredData?.length === 0 ? (
                 <tr>
                   <td colSpan={4}>데이터가 없습니다.</td>
                 </tr>
+              ) : (
+                filteredData?.map((doc) => {
+                  return (
+                    <tr key={doc.uid}>
+                      <td>{convertDate(doc.date)}</td>
+                      <td>{doc.pees}</td>
+                      <td>{doc.poops}</td>
+                      <td>{doc.memo || "-"}</td>
+                    </tr>
+                  );
+                })
               )}
-              {data.map((doc) => {
-                return (
-                  <tr key={"toilet" + doc.date}>
-                    <td>{convertDate(doc.date)}</td>
-                    <td>{doc.pees}</td>
-                    <td>{doc.poops}</td>
-                    <td>{doc.memo || "-"}</td>
-                  </tr>
-                );
-              })}
             </tbody>
           </>
         );
@@ -64,21 +85,22 @@ function DiaryTable({ selectedMenu, data }: DiaryDataType) {
               </tr>
             </thead>
             <tbody>
-              {data.length === 0 && (
+              {filteredData?.length === 0 ? (
                 <tr>
                   <td colSpan={4}>데이터가 없습니다.</td>
                 </tr>
+              ) : (
+                filteredData?.map((doc) => {
+                  return (
+                    <tr key={doc.uid}>
+                      <td>{convertDate(doc.date)}</td>
+                      <td>{listOfFeeding[doc.valueOfFeed]}</td>
+                      <td>{doc.volumeOfFeed}g</td>
+                      <td>{doc.memo || "-"}</td>
+                    </tr>
+                  );
+                })
               )}
-              {data.map((doc) => {
-                return (
-                  <tr key={"feeding" + doc.date}>
-                    <td>{convertDate(doc.date)}</td>
-                    <td>{listOfFeeding[doc.valueOfFeed]}</td>
-                    <td>{doc.volumeOfFeed}g</td>
-                    <td>{doc.memo || "-"}</td>
-                  </tr>
-                );
-              })}
             </tbody>
           </>
         );
@@ -92,19 +114,20 @@ function DiaryTable({ selectedMenu, data }: DiaryDataType) {
               </tr>
             </thead>
             <tbody>
-              {data.length === 0 && (
+              {filteredData?.length === 0 ? (
                 <tr>
                   <td colSpan={4}>데이터가 없습니다.</td>
                 </tr>
+              ) : (
+                filteredData?.map((doc) => {
+                  return (
+                    <tr key={doc.uid}>
+                      <td>{convertDate(doc.date)}</td>
+                      <td>{convertPlayingTime(doc.playTime)}</td>
+                    </tr>
+                  );
+                })
               )}
-              {data.map((doc) => {
-                return (
-                  <tr key={"playing" + doc.date}>
-                    <td>{convertDate(doc.date)}</td>
-                    <td>{convertPlayingTime(doc.playTime)}</td>
-                  </tr>
-                );
-              })}
             </tbody>
           </>
         );
@@ -125,20 +148,21 @@ function DiaryTable({ selectedMenu, data }: DiaryDataType) {
               </tr>
             </thead>
             <tbody>
-              {data.length === 0 && (
+              {filteredData?.length === 0 ? (
                 <tr>
                   <td colSpan={4}>데이터가 없습니다.</td>
                 </tr>
+              ) : (
+                filteredData?.map((doc) => {
+                  return (
+                    <tr key={doc.uid}>
+                      <td>{convertDate(doc.date)}</td>
+                      <td>{listOfVaccine[doc.valueOfVaccine]}</td>
+                      <td>{doc.etcVaccine || "-"}</td>
+                    </tr>
+                  );
+                })
               )}
-              {data.map((doc) => {
-                return (
-                  <tr key={"vaccination" + doc.date}>
-                    <td>{convertDate(doc.date)}</td>
-                    <td>{listOfVaccine[doc.valueOfVaccine]}</td>
-                    <td>{doc.etcVaccine || "-"}</td>
-                  </tr>
-                );
-              })}
             </tbody>
           </>
         );
@@ -154,7 +178,27 @@ function DiaryTable({ selectedMenu, data }: DiaryDataType) {
     }
   };
 
-  return <TableBlock>{tableData()}</TableBlock>;
+  useEffect(() => {
+    const filteredByMonth = data.filter((doc) =>
+      doc.date.startsWith(currentMonth)
+    );
+    setFilteredData(filteredByMonth);
+  }, [currentMonth, data]);
+
+  return (
+    <>
+      <input
+        type="month"
+        id="select-month"
+        name="select-month"
+        min={calcMinMaxMonth(data).minMonth}
+        max={getCurrentTime().slice(0, 7)}
+        value={currentMonth}
+        onChange={(e) => setCurrentMonth(e.target.value)}
+      />
+      <TableBlock>{tableData()}</TableBlock>
+    </>
+  );
 }
 
 export default DiaryTable;

@@ -1,13 +1,16 @@
-import Button from "@/components/Button";
-import DiaryTable from "@/components/DiaryTable";
-import TitleLayout from "@/components/TitleLayout";
+import { ReactElement, useEffect, useState } from "react";
 import { collection, DocumentData, getDocs } from "firebase/firestore";
 import { storage } from "firebaseInit";
 import { NextPageWithLayout } from "pages/_app";
-import { ReactElement, useEffect, useState } from "react";
 import styled from "styled-components";
 
+import Button from "@/components/Button";
+import DiaryTable from "@/components/DiaryTable";
+import Loading from "@/components/Loading";
+import TitleLayout from "@/components/TitleLayout";
+
 const DiaryIndex: NextPageWithLayout = () => {
+  const [loading, setLoading] = useState(true);
   const [selectedMenu, setSelectedMenu] = useState("toilet");
   const [petId, setPetId] = useState("");
   const [data, setData] = useState<DocumentData[]>([]);
@@ -19,6 +22,7 @@ const DiaryIndex: NextPageWithLayout = () => {
       .filter((doc) => doc.id.includes(petId))
       .map((doc) => doc.data());
     setData(matchingDocumentArr);
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -36,30 +40,46 @@ const DiaryIndex: NextPageWithLayout = () => {
       <TabMenuWrapper>
         <Button
           filled={selectedMenu === "toilet"}
-          onClick={() => setSelectedMenu("toilet")}
+          onClick={() => {
+            setSelectedMenu("toilet");
+            setLoading(true);
+          }}
         >
           화장실
         </Button>
         <Button
           filled={selectedMenu === "feeding"}
-          onClick={() => setSelectedMenu("feeding")}
+          onClick={() => {
+            setSelectedMenu("feeding");
+            setLoading(true);
+          }}
         >
           식사
         </Button>
         <Button
           filled={selectedMenu === "playing"}
-          onClick={() => setSelectedMenu("playing")}
+          onClick={() => {
+            setSelectedMenu("playing");
+            setLoading(true);
+          }}
         >
           놀이
         </Button>
         <Button
           filled={selectedMenu === "vaccination"}
-          onClick={() => setSelectedMenu("vaccination")}
+          onClick={() => {
+            setSelectedMenu("vaccination");
+            setLoading(true);
+          }}
         >
           접종
         </Button>
       </TabMenuWrapper>
-      <DiaryTable selectedMenu={selectedMenu} data={data} />
+      {loading ? (
+        <Loading />
+      ) : (
+        <DiaryTable selectedMenu={selectedMenu} data={data} />
+      )}
     </MainWrapper>
   );
 };
@@ -77,11 +97,16 @@ const MainWrapper = styled.main`
   margin: 0 auto;
   background-color: #fff;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+
+  input[type="month"] {
+    width: 100%;
+    margin-bottom: 10px;
+  }
 `;
 
 const TabMenuWrapper = styled.div`
   width: 100%;
   display: flex;
   gap: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 `;

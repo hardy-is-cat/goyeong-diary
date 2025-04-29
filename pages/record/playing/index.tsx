@@ -52,6 +52,7 @@ const PlayingIndex: NextPageWithLayout = () => {
     e.preventDefault();
 
     const data: PlayingData = {
+      uid: petId + "_" + time,
       date: time,
       playTime: playTime,
     };
@@ -69,6 +70,8 @@ const PlayingIndex: NextPageWithLayout = () => {
         <InputWrapper>
           <label htmlFor="date">현재 시간</label>
           <DateInput
+            id="date"
+            name="date"
             value={time}
             onChange={handleTime}
             onClick={updateCurrentTime}

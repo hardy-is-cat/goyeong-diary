@@ -32,6 +32,7 @@ const ToiletIndex: NextPageWithLayout = () => {
     e.preventDefault();
 
     const data: ToiletData = {
+      uid: petId + "_" + time,
       date: time,
       pees: pees,
       poops: poops,
@@ -51,6 +52,8 @@ const ToiletIndex: NextPageWithLayout = () => {
         <InputWrapper>
           <label htmlFor="date">시간</label>
           <DateInput
+            id="date"
+            name="date"
             value={time}
             onChange={handleTime}
             onClick={updateCurrentTime}
@@ -58,16 +61,28 @@ const ToiletIndex: NextPageWithLayout = () => {
         </InputWrapper>
         <InputWrapper>
           <label htmlFor="pees">감자</label>
-          <QuantityInput quantity={pees} handleQuantity={handlePees} />
+          <QuantityInput
+            id="pees"
+            name="pees"
+            quantity={pees}
+            handleQuantity={handlePees}
+          />
         </InputWrapper>
         <InputWrapper>
           <label htmlFor="poops">맛동산</label>
-          <QuantityInput quantity={poops} handleQuantity={handlePoops} />
+          <QuantityInput
+            id="poops"
+            name="poops"
+            quantity={poops}
+            handleQuantity={handlePoops}
+          />
         </InputWrapper>
         <InputWrapper>
           <label htmlFor="memo">특이사항</label>
           <div>
             <textarea
+              id="memo"
+              name="memo"
               placeholder="특이사항을 메모해보세요."
               value={etcMemo}
               onChange={(e) => setEtcMemo(e.target.value)}

@@ -12,6 +12,7 @@ export type UserInfo = {
 };
 
 export type ToiletData = {
+  uid: string;
   date: string;
   pees: number;
   poops: number;
@@ -19,6 +20,7 @@ export type ToiletData = {
 };
 
 export type FeedingData = {
+  uid: string;
   date: string;
   valueOfFeed: string;
   volumeOfFeed: string;
@@ -26,11 +28,13 @@ export type FeedingData = {
 };
 
 export type PlayingData = {
+  uid: string;
   date: string;
   playTime: number;
 };
 
 export type VaccinationData = {
+  uid: string;
   date: string;
   valueOfVaccine: string;
   etcVaccine?: string;

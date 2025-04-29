@@ -21,6 +21,7 @@ const VaccinationIndex: NextPageWithLayout = () => {
     e.preventDefault();
 
     const data: VaccinationData = {
+      uid: petId + "_" + time,
       date: time,
       valueOfVaccine,
       etcVaccine: etcMemo,
@@ -39,6 +40,8 @@ const VaccinationIndex: NextPageWithLayout = () => {
         <InputWrapper>
           <label htmlFor="date">현재 시간</label>
           <DateInput
+            id="date"
+            name="date"
             value={time}
             onChange={handleTime}
             onClick={updateCurrentTime}
@@ -48,8 +51,9 @@ const VaccinationIndex: NextPageWithLayout = () => {
           <label htmlFor="value-of-vaccine">접종 종류</label>
           <div>
             <select
-              defaultValue="default"
+              id="value-of-vaccine"
               name="value-of-vaccine"
+              defaultValue="default"
               required
               onChange={(e) => setValueOfVaccine(e.target.value)}
             >
@@ -66,6 +70,8 @@ const VaccinationIndex: NextPageWithLayout = () => {
         <InputWrapper>
           <label htmlFor="memo">특이사항</label>
           <textarea
+            id="memo"
+            name="memo"
             placeholder="특이사항을 메모해보세요."
             value={etcMemo}
             onChange={(e) => setEtcMemo(e.target.value)}

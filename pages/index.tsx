@@ -61,7 +61,7 @@ const MainWrapper = styled.main`
 const MyCatPicBlock = styled.div`
   width: 180px;
   height: 180px;
-  margin: 50px auto 20px;
+  margin: 0 auto 20px;
   background-color: gray;
   border-radius: 999px;
   overflow: hidden;
