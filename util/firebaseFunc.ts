@@ -1,4 +1,11 @@
-import { addDoc, collection, doc, setDoc, updateDoc } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  deleteDoc,
+  doc,
+  setDoc,
+  updateDoc,
+} from "firebase/firestore";
 import {
   FeedingData,
   PlayingData,
@@ -47,4 +54,21 @@ const uploadData = async (
   }
 };
 
-export { updateCatsCollection, updateUsersCollection, uploadData };
+const deleteDiaryData = async (collectionName: string, uid: string) => {
+  try {
+    const userConfirm = confirm("기록을 삭제하시겠습니까?");
+    if (userConfirm) {
+      await deleteDoc(doc(storage, collectionName + "/" + uid));
+      location.reload();
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export {
+  updateCatsCollection,
+  updateUsersCollection,
+  uploadData,
+  deleteDiaryData,
+};
