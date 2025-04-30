@@ -132,6 +132,7 @@ const InputWrapper = styled.div`
   label {
     width: 80px;
     margin-top: 12px;
+    flex-shrink: 0;
   }
 
   textarea {

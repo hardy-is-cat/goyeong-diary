@@ -187,7 +187,7 @@ function DiaryTable({ selectedMenu, data }: DiaryDataType) {
 
   return (
     <>
-      <input
+      <MonthPicker
         type="month"
         id="select-month"
         name="select-month"
@@ -202,6 +202,10 @@ function DiaryTable({ selectedMenu, data }: DiaryDataType) {
 }
 
 export default DiaryTable;
+
+const MonthPicker = styled.input`
+  width: 100%;
+`;
 
 const TableBlock = styled.table`
   width: 100%;

@@ -34,11 +34,12 @@ export default QuantityInput;
 
 const QuantityInputBlock = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   gap: 4px;
 
   input {
+    width: calc(100% - 88px);
     height: 40px;
     text-align: center;
     background-color: white;
