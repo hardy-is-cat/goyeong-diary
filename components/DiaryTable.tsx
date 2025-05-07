@@ -27,14 +27,22 @@ function DiaryTable({ selectedMenu, data }: DiaryDataType) {
   };
 
   const calcMinMaxMonth = (data: DocumentData[]) => {
-    const dates = data.map((doc) => doc.date);
-    const sortedDates: string[] = dates.sort((prev, curr) => {
-      return new Date(prev).getTime() - new Date(curr).getTime();
-    });
-    const minMonth = sortedDates[0].slice(0, 7);
-    // const maxMonth = sortedDates[sortedDates.length - 1].slice(0, 7);
-    const maxMonth = getCurrentTime().slice(0, 7);
-    return { minMonth, maxMonth };
+    if (data.length === 0) {
+      // 저장된 데이터가 하나도 없을 경우
+      return {
+        minMonth: getCurrentTime().slice(0, 7),
+        maxMonth: getCurrentTime().slice(0, 7),
+      };
+    } else {
+      const dates = data.map((doc) => doc.date);
+      const sortedDates: string[] = dates.sort((prev, curr) => {
+        return new Date(prev).getTime() - new Date(curr).getTime();
+      });
+      const minMonth = sortedDates[0].slice(0, 7);
+      // const maxMonth = sortedDates[sortedDates.length - 1].slice(0, 7);
+      const maxMonth = getCurrentTime().slice(0, 7);
+      return { minMonth, maxMonth };
+    }
   };
 
   const tableData = () => {
@@ -54,7 +62,7 @@ function DiaryTable({ selectedMenu, data }: DiaryDataType) {
             <tbody>
               {filteredData?.length === 0 ? (
                 <tr>
-                  <td colSpan={4}>데이터가 없습니다.</td>
+                  <td colSpan={5}>데이터가 없습니다.</td>
                 </tr>
               ) : (
                 filteredData?.map((doc) => {
@@ -101,7 +109,7 @@ function DiaryTable({ selectedMenu, data }: DiaryDataType) {
             <tbody>
               {filteredData?.length === 0 ? (
                 <tr>
-                  <td colSpan={4}>데이터가 없습니다.</td>
+                  <td colSpan={5}>데이터가 없습니다.</td>
                 </tr>
               ) : (
                 filteredData?.map((doc) => {
@@ -140,7 +148,7 @@ function DiaryTable({ selectedMenu, data }: DiaryDataType) {
             <tbody>
               {filteredData?.length === 0 ? (
                 <tr>
-                  <td colSpan={4}>데이터가 없습니다.</td>
+                  <td colSpan={5}>데이터가 없습니다.</td>
                 </tr>
               ) : (
                 filteredData?.map((doc) => {
@@ -184,7 +192,7 @@ function DiaryTable({ selectedMenu, data }: DiaryDataType) {
             <tbody>
               {filteredData?.length === 0 ? (
                 <tr>
-                  <td colSpan={4}>데이터가 없습니다.</td>
+                  <td colSpan={5}>데이터가 없습니다.</td>
                 </tr>
               ) : (
                 filteredData?.map((doc) => {
@@ -270,7 +278,7 @@ const TableBlock = styled.table<{ $onEdit: boolean }>`
     }
 
     th:nth-of-type(1) {
-      width: 35%;
+      width: 40%;
     }
     th:nth-of-type(2) {
       width: 15%;
@@ -279,7 +287,7 @@ const TableBlock = styled.table<{ $onEdit: boolean }>`
       width: 15%;
     }
     th:nth-of-type(4) {
-      width: ${({ $onEdit }) => ($onEdit ? "15%" : "35%")};
+      width: ${({ $onEdit }) => ($onEdit ? "15%" : "30%")};
     }
   }
 

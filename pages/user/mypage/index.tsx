@@ -1,6 +1,7 @@
 import Button from "@/components/Button";
 import { signOut } from "firebase/auth";
 import { auth } from "firebaseInit";
+import Link from "next/link";
 import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import { isLoggedInState, userInfoState } from "util/atoms";
@@ -22,7 +23,7 @@ function SettingIndex() {
   return (
     <MainWrapper>
       <h1>안녕하세요 {user?.displayName}님!</h1>
-      <Button onClick={() => alert("준비중입니다!")}>프로필 수정</Button>
+      <Link href="/user/edit-pet">프로필 수정</Link>
       <Button onClick={handleLogout} warn>
         로그아웃
       </Button>
@@ -48,5 +49,26 @@ const MainWrapper = styled.main`
 
   button {
     margin-bottom: 10px;
+  }
+
+  a {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    font-size: inherit;
+    text-align: center;
+    border-radius: 4px;
+    border: 1px solid ${({ theme }) => theme.colors.primary};
+    background-color: white;
+    color: ${({ theme }) => theme.colors.primary};
+    cursor: pointer;
+    transition: all 0.3s;
+
+    &:hover {
+      border: 1px solid ${({ theme }) => theme.colors.primary};
+      background-color: ${({ theme }) => theme.colors.primary};
+      color: white;
+    }
   }
 `;

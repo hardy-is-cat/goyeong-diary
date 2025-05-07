@@ -1,18 +1,20 @@
-import { FormEvent, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
-import { auth } from "firebaseInit";
+import { auth, storage } from "firebaseInit";
 import { updateProfile } from "firebase/auth";
+import { doc, getDoc } from "firebase/firestore";
 import styled from "styled-components";
 import resizingImage from "@/util/resizingImage";
 import fetchImgbb from "@/util/fetchImgbb";
-import { addCatsCollection, updateUsersCollection } from "@/util/firebaseFunc";
+import { updateCatsDoc } from "@/util/firebaseFunc";
 
 import Button from "@/components/Button";
 import Input from "@/components/Input";
 import PageTitle from "@/components/PageTitle";
 
 function AddPetIndex() {
-  const [name, setName] = useState("");
+  const [userName, setUserName] = useState("");
+  const [petName, setPetName] = useState("");
   const [birth, setBirth] = useState("");
   const [picFile, setPicFile] = useState<File | null>();
   const [resizingPicBlob, setResizingPicBlob] = useState<Blob | null>(null);
@@ -54,40 +56,64 @@ function AddPetIndex() {
     setResizingPicURL("");
   };
 
-  const uploadPet = async (e: FormEvent) => {
+  const updatePetData = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     let imgbbThumbUrl = "";
 
-    // imgbb 이미지 업로드
+    // 새 프로필 사진 있으면 imgbb 이미지 업로드. 아니면 기존 이미지 url
     if (resizingPicBlob) {
       await fetchImgbb(resizingPicBlob, picFile!.name).then((res) => {
         imgbbThumbUrl = res.data.image.url;
       });
+    } else {
+      imgbbThumbUrl = localStorage.getItem("photoURL")!;
     }
 
-    // firebase 업로드
+    // firebase 회원정보 변경, cats 컬렉션 해당 문서 업데이트
     const user = auth.currentUser;
-    updateProfile(user!, { photoURL: imgbbThumbUrl });
-    localStorage.setItem("photoURL", imgbbThumbUrl);
-    await addCatsCollection({
-      name,
-      birth,
-      thumb: imgbbThumbUrl || "https://i.ibb.co/Kc6tjcX5/default-profile.png",
-      user: [user!.uid],
-    }).then(async (catId) => {
-      await updateUsersCollection(catId!);
-      // setUserInfo((prev) => ({
-      //   ...prev,
-      //   pet: catId!,
-      // }));
-      localStorage.setItem("pet", `[${catId}]`);
-    });
+    const petId = localStorage.getItem("pet")!;
 
-    alert("내새꾸 등록이 완료됐습니다!");
-    router.push("/");
+    updateProfile(user!, { displayName: userName, photoURL: imgbbThumbUrl });
+    localStorage.setItem("displayName", userName);
+    localStorage.setItem("photoURL", imgbbThumbUrl);
+
+    updateCatsDoc(
+      {
+        name: petName,
+        birth,
+        thumb: imgbbThumbUrl,
+      },
+      petId
+    )
+      .then(() => {
+        alert("프로필이 수정되었습니다!");
+        router.push("/");
+      })
+      .catch((error) => console.error("수정 중 오류 발생: ", error));
+  };
+
+  const getCatInfo = async (petId: string | null) => {
+    if (petId) {
+      const catsDocRef = doc(storage, "cats", petId!);
+      const catInfoDoc = await getDoc(catsDocRef);
+      const catData = catInfoDoc.data();
+      if (catData) {
+        setBirth(catData.birth);
+        setPetName(catData.name);
+      }
+    }
   };
 
   useEffect(() => {
+    const displayName = localStorage.getItem("displayName");
+    const petId = localStorage.getItem("pet");
+
+    if (displayName) {
+      setUserName(displayName);
+    }
+
+    getCatInfo(petId);
+
     return () => {
       if (resizingPicURL) {
         URL.revokeObjectURL(resizingPicURL);
@@ -99,14 +125,25 @@ function AddPetIndex() {
     <>
       <PageTitle />
       <MainWrapper>
-        <form onSubmit={uploadPet}>
+        <form onSubmit={updatePetData}>
           <InputWrapper>
-            <label htmlFor="name">이름</label>
+            <label htmlFor="userName">닉네임</label>
             <Input
-              id="name"
+              id="userName"
+              name="userName"
               type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              value={userName}
+              onChange={(e) => setUserName(e.target.value)}
+            />
+          </InputWrapper>
+          <InputWrapper>
+            <label htmlFor="petName">이름</label>
+            <Input
+              id="petName"
+              name="petName"
+              type="text"
+              value={petName}
+              onChange={(e) => setPetName(e.target.value)}
             />
           </InputWrapper>
           <InputWrapper>
@@ -144,8 +181,12 @@ function AddPetIndex() {
               </PreviewBlock>
             </>
           )}
-          <Button type="submit" filled disabled={!name || !birth}>
-            등록
+          <Button
+            type="submit"
+            filled
+            disabled={!userName || !petName || !birth}
+          >
+            수정
           </Button>
         </form>
       </MainWrapper>

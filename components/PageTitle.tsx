@@ -30,6 +30,9 @@ function PageTitle() {
       case "/user/add-pet":
         title = "내새꾸 등록하기";
         break;
+      case "/user/edit-pet":
+        title = "프로필 수정하기";
+        break;
 
       default:
         title = "페이지 이름 없음";
