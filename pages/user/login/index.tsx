@@ -57,6 +57,31 @@ function LoginIndex() {
       });
   };
 
+  const signInTesting = () => {
+    const TEST_ID = process.env.NEXT_PUBLIC_FIREBASE_TEST_ID!;
+    const TEST_PASSWORD = process.env.NEXT_PUBLIC_FIREBASE_TEST_PASSWORD!;
+    signInWithEmailAndPassword(auth, TEST_ID, TEST_PASSWORD)
+      .then(async (userCredential) => {
+        localStorage.setItem("displayName", userCredential.user.displayName!);
+        localStorage.setItem("uid", userCredential.user.uid);
+        localStorage.setItem("photoURL", userCredential.user.photoURL!);
+
+        const docRef = doc(storage, "users", userCredential.user.uid);
+        const docSnap = await getDoc(docRef);
+        const userData = docSnap.data();
+        localStorage.setItem("pet", userData?.pet);
+        router.push("/");
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        if (errorCode === "auth/too-many-requests") {
+          alert("잠시 후 다시 시도해주세요.");
+        } else {
+          alert("로그인에 실패했습니다!");
+        }
+      });
+  };
+
   return (
     <MainWrapper>
       <H1Block>로그인</H1Block>
@@ -75,6 +100,9 @@ function LoginIndex() {
         />
         <Button type="submit" disabled={!email || !password} filled>
           로그인
+        </Button>
+        <Button type="button" filled onClick={signInTesting}>
+          테스트 계정으로 로그인
         </Button>
         <Link href="/user/signup">회원가입</Link>
       </LoginBlock>

@@ -27,14 +27,22 @@ function DiaryTable({ selectedMenu, data }: DiaryDataType) {
   };
 
   const calcMinMaxMonth = (data: DocumentData[]) => {
-    const dates = data.map((doc) => doc.date);
-    const sortedDates: string[] = dates.sort((prev, curr) => {
-      return new Date(prev).getTime() - new Date(curr).getTime();
-    });
-    const minMonth = sortedDates[0].slice(0, 7);
-    // const maxMonth = sortedDates[sortedDates.length - 1].slice(0, 7);
-    const maxMonth = getCurrentTime().slice(0, 7);
-    return { minMonth, maxMonth };
+    if (data.length === 0) {
+      // 저장된 데이터가 하나도 없을 경우
+      return {
+        minMonth: getCurrentTime().slice(0, 7),
+        maxMonth: getCurrentTime().slice(0, 7),
+      };
+    } else {
+      const dates = data.map((doc) => doc.date);
+      const sortedDates: string[] = dates.sort((prev, curr) => {
+        return new Date(prev).getTime() - new Date(curr).getTime();
+      });
+      const minMonth = sortedDates[0].slice(0, 7);
+      // const maxMonth = sortedDates[sortedDates.length - 1].slice(0, 7);
+      const maxMonth = getCurrentTime().slice(0, 7);
+      return { minMonth, maxMonth };
+    }
   };
 
   const tableData = () => {
