@@ -54,7 +54,7 @@ function DiaryTable({ selectedMenu, data }: DiaryDataType) {
             <tbody>
               {filteredData?.length === 0 ? (
                 <tr>
-                  <td colSpan={4}>데이터가 없습니다.</td>
+                  <td colSpan={5}>데이터가 없습니다.</td>
                 </tr>
               ) : (
                 filteredData?.map((doc) => {
@@ -101,7 +101,7 @@ function DiaryTable({ selectedMenu, data }: DiaryDataType) {
             <tbody>
               {filteredData?.length === 0 ? (
                 <tr>
-                  <td colSpan={4}>데이터가 없습니다.</td>
+                  <td colSpan={5}>데이터가 없습니다.</td>
                 </tr>
               ) : (
                 filteredData?.map((doc) => {
@@ -140,7 +140,7 @@ function DiaryTable({ selectedMenu, data }: DiaryDataType) {
             <tbody>
               {filteredData?.length === 0 ? (
                 <tr>
-                  <td colSpan={4}>데이터가 없습니다.</td>
+                  <td colSpan={5}>데이터가 없습니다.</td>
                 </tr>
               ) : (
                 filteredData?.map((doc) => {
@@ -184,7 +184,7 @@ function DiaryTable({ selectedMenu, data }: DiaryDataType) {
             <tbody>
               {filteredData?.length === 0 ? (
                 <tr>
-                  <td colSpan={4}>데이터가 없습니다.</td>
+                  <td colSpan={5}>데이터가 없습니다.</td>
                 </tr>
               ) : (
                 filteredData?.map((doc) => {
@@ -270,7 +270,7 @@ const TableBlock = styled.table<{ $onEdit: boolean }>`
     }
 
     th:nth-of-type(1) {
-      width: 35%;
+      width: 40%;
     }
     th:nth-of-type(2) {
       width: 15%;
@@ -279,7 +279,7 @@ const TableBlock = styled.table<{ $onEdit: boolean }>`
       width: 15%;
     }
     th:nth-of-type(4) {
-      width: ${({ $onEdit }) => ($onEdit ? "15%" : "35%")};
+      width: ${({ $onEdit }) => ($onEdit ? "15%" : "30%")};
     }
   }
 

@@ -15,7 +15,7 @@ import {
 } from "./types";
 import { auth, storage } from "firebaseInit";
 
-const updateCatsCollection = async (data: CatInfo) => {
+const addCatsCollection = async (data: CatInfo) => {
   const catsCollectionRef = collection(storage, "cats");
   const user = auth.currentUser;
   try {
@@ -25,6 +25,19 @@ const updateCatsCollection = async (data: CatInfo) => {
       thumb: data.thumb || "https://i.ibb.co/Kc6tjcX5/default-profile.png",
       user: [user!.uid],
     });
+    return docRef.id;
+  } catch (error) {
+    console.error("저장 중 오류 발생!", error);
+  }
+};
+
+const updateCatsDoc = async (
+  updateCatData: Partial<CatInfo>,
+  catId: string
+) => {
+  const docRef = doc(storage, "cats", catId);
+  try {
+    await updateDoc(docRef, updateCatData);
     return docRef.id;
   } catch (error) {
     console.error("저장 중 오류 발생!", error);
@@ -67,7 +80,8 @@ const deleteDiaryData = async (collectionName: string, uid: string) => {
 };
 
 export {
-  updateCatsCollection,
+  addCatsCollection,
+  updateCatsDoc,
   updateUsersCollection,
   uploadData,
   deleteDiaryData,
