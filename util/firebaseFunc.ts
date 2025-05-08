@@ -3,6 +3,8 @@ import {
   collection,
   deleteDoc,
   doc,
+  DocumentData,
+  getDoc,
   setDoc,
   updateDoc,
 } from "firebase/firestore";
@@ -14,6 +16,17 @@ import {
   CatInfo,
 } from "./types";
 import { auth, storage } from "firebaseInit";
+
+const loadCatDoc = async (): Promise<DocumentData | undefined> => {
+  const petId = localStorage.getItem("pet");
+  if (petId) {
+    const catDocRef = doc(storage, "cats", petId);
+    const catDoc = await getDoc(catDocRef);
+    return catDoc.data();
+  } else {
+    console.error("petId 불러오기 실패!");
+  }
+};
 
 const addCatsCollection = async (data: CatInfo) => {
   const catsCollectionRef = collection(storage, "cats");
@@ -80,6 +93,7 @@ const deleteDiaryData = async (collectionName: string, uid: string) => {
 };
 
 export {
+  loadCatDoc,
   addCatsCollection,
   updateCatsDoc,
   updateUsersCollection,
