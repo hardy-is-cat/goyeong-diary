@@ -27,6 +27,7 @@ function LoginIndex() {
         localStorage.setItem("displayName", userCredential.user.displayName!);
         localStorage.setItem("uid", userCredential.user.uid);
         localStorage.setItem("photoURL", userCredential.user.photoURL!);
+        localStorage.setItem("isLoggedIn", "true");
         // setIsLoggedIn(true);
         // user 컬렉션 내부의 uid 문서에서 pet 배열이 비어있으면 펫 등록 페이지로 이동
         const docRef = doc(storage, "users", userCredential.user.uid);
@@ -65,6 +66,7 @@ function LoginIndex() {
         localStorage.setItem("displayName", userCredential.user.displayName!);
         localStorage.setItem("uid", userCredential.user.uid);
         localStorage.setItem("photoURL", userCredential.user.photoURL!);
+        localStorage.setItem("isLoggedIn", "true");
 
         const docRef = doc(storage, "users", userCredential.user.uid);
         const docSnap = await getDoc(docRef);

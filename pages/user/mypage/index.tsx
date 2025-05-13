@@ -2,27 +2,28 @@ import Button from "@/components/Button";
 import { signOut } from "firebase/auth";
 import { auth } from "firebaseInit";
 import Link from "next/link";
-import { useSetRecoilState } from "recoil";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { isLoggedInState, userInfoState } from "util/atoms";
 
 function SettingIndex() {
-  const user = auth.currentUser;
-  const setUserInfoState = useSetRecoilState(userInfoState);
-  const setIsLoggedInState = useSetRecoilState(isLoggedInState);
+  const [displayName, setDisplayName] = useState<string | null>();
 
   const handleLogout = () => {
     signOut(auth);
-    // setUserInfoState({});
-    // setIsLoggedInState(false);
     localStorage.clear();
     alert("로그아웃되었습니다!");
     window.location.href = "/user/login";
   };
 
+  useEffect(() => {
+    auth.onAuthStateChanged((user) => {
+      if (user) setDisplayName(user.displayName);
+    });
+  }, []);
+
   return (
     <MainWrapper>
-      <h1>안녕하세요 {user?.displayName}님!</h1>
+      <h1>안녕하세요 {displayName && displayName + "님!"}</h1>
       <Link href="/user/edit-pet">프로필 수정</Link>
       <Button onClick={handleLogout} warn>
         로그아웃

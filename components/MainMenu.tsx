@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import styled from "styled-components";
 
@@ -13,25 +14,49 @@ function MainMenu({ isLoggedIn }: { isLoggedIn: boolean }) {
       <li>
         <Link href="/record/toilet" onClick={handleClick}>
           <p>감자캐기</p>
-          <img src="images/icons/icon-dig-potato.png" />
+          <Image
+            src="/images/icons/icon-dig-potato.png"
+            width={82}
+            height={47}
+            sizes="100vw"
+            alt="화장실 기록하기"
+          />
         </Link>
       </li>
       <li>
         <Link href="/record/feeding" onClick={handleClick}>
           <p>밥주기</p>
-          <img src="images/icons/icon-feeding.png" />
+          <Image
+            src="/images/icons/icon-feeding.png"
+            width={88}
+            height={46}
+            sizes="100vw"
+            alt="급여 기록하기"
+          />
         </Link>
       </li>
       <li>
         <Link href="/record/playing" onClick={handleClick}>
           <p>놀아주기</p>
-          <img src="images/icons/icon-playing.png" />
+          <Image
+            src="/images/icons/icon-playing.png"
+            width={61}
+            height={46}
+            sizes="100vw"
+            alt="놀이시간 기록하기"
+          />
         </Link>
       </li>
       <li>
         <Link href="/record/vaccination" onClick={handleClick}>
           <p>접종하기</p>
-          <img src="images/icons/icon-vaccination.png" />
+          <Image
+            src="/images/icons/icon-vaccination.png"
+            width={72}
+            height={45}
+            sizes="100vw"
+            alt="접종 기록하기"
+          />
         </Link>
       </li>
     </MenuBlock>

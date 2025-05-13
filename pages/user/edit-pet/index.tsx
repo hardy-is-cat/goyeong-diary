@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import { useRouter } from "next/router";
 import { auth, storage } from "firebaseInit";
 import { updateProfile } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
@@ -13,15 +12,14 @@ import Input from "@/components/Input";
 import PageTitle from "@/components/PageTitle";
 
 function AddPetIndex() {
-  const [userName, setUserName] = useState("");
+  const [displayName, setDisplayName] = useState("");
+  const [prevPicFile, setPrevPicFile] = useState("");
   const [petName, setPetName] = useState("");
   const [birth, setBirth] = useState("");
   const [picFile, setPicFile] = useState<File | null>();
   const [resizingPicBlob, setResizingPicBlob] = useState<Blob | null>(null);
   const [resizingPicURL, setResizingPicURL] = useState("");
   const pictureRef = useRef<HTMLInputElement>(null);
-
-  const router = useRouter();
 
   // 버튼과 input type="file" 연동
   // 버튼 클릭 이벤트
@@ -66,20 +64,20 @@ function AddPetIndex() {
         imgbbThumbUrl = res.data.image.url;
       });
     } else {
-      imgbbThumbUrl = localStorage.getItem("photoURL")!;
+      imgbbThumbUrl = prevPicFile;
     }
 
     // firebase 회원정보 변경, cats 컬렉션 해당 문서 업데이트
     const user = auth.currentUser;
     const petId = localStorage.getItem("pet")!;
 
-    updateProfile(user!, { displayName: userName, photoURL: imgbbThumbUrl });
-    localStorage.setItem("displayName", userName);
+    updateProfile(user!, { displayName: displayName, photoURL: imgbbThumbUrl });
+    localStorage.setItem("displayName", displayName!);
     localStorage.setItem("photoURL", imgbbThumbUrl);
 
     updateCatsDoc(
       {
-        name: petName,
+        name: petName!,
         birth,
         thumb: imgbbThumbUrl,
       },
@@ -87,7 +85,7 @@ function AddPetIndex() {
     )
       .then(() => {
         alert("프로필이 수정되었습니다!");
-        router.push("/");
+        window.location.href = "/";
       })
       .catch((error) => console.error("수정 중 오류 발생: ", error));
   };
@@ -105,12 +103,13 @@ function AddPetIndex() {
   };
 
   useEffect(() => {
-    const displayName = localStorage.getItem("displayName");
     const petId = localStorage.getItem("pet");
-
-    if (displayName) {
-      setUserName(displayName);
-    }
+    auth.onAuthStateChanged((user) => {
+      if (user !== null) {
+        setDisplayName(user.displayName!);
+        setPrevPicFile(user.photoURL!);
+      }
+    });
 
     getCatInfo(petId);
 
@@ -127,13 +126,13 @@ function AddPetIndex() {
       <MainWrapper>
         <form onSubmit={updatePetData}>
           <InputWrapper>
-            <label htmlFor="userName">닉네임</label>
+            <label htmlFor="displayName">닉네임</label>
             <Input
-              id="userName"
-              name="userName"
+              id="displayName"
+              name="displayName"
               type="text"
-              value={userName}
-              onChange={(e) => setUserName(e.target.value)}
+              value={displayName}
+              onChange={(e) => setDisplayName(e.target.value)}
             />
           </InputWrapper>
           <InputWrapper>
@@ -184,7 +183,7 @@ function AddPetIndex() {
           <Button
             type="submit"
             filled
-            disabled={!userName || !petName || !birth}
+            disabled={!displayName || !petName || !birth}
           >
             수정
           </Button>
