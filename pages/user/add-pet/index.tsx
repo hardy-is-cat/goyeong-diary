@@ -111,7 +111,7 @@ function AddPetIndex() {
           </InputWrapper>
           <InputWrapper>
             <label htmlFor="date">생일</label>
-            <input
+            <Input
               type="date"
               name="date"
               value={birth}
@@ -131,7 +131,7 @@ function AddPetIndex() {
               type="file"
               name="pet-profile"
               onChange={selectPicture}
-              accept="image/*"
+              accept=".jpeg,.jpg,.png"
               capture="environment"
               ref={pictureRef}
               style={{ display: "none" }}
@@ -185,6 +185,7 @@ const InputWrapper = styled.div`
   label {
     width: 80px;
     margin-top: 12px;
+    flex-shrink: 0;
   }
 `;
 
