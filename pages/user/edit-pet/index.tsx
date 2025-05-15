@@ -167,8 +167,7 @@ function AddPetIndex() {
               type="file"
               name="pet-profile"
               onChange={selectPicture}
-              accept="image/*"
-              capture="environment"
+              accept=".jpeg,.jpg,.png"
               ref={pictureRef}
               style={{ display: "none" }}
             />
