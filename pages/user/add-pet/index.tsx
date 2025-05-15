@@ -13,7 +13,7 @@ import PageTitle from "@/components/PageTitle";
 
 function AddPetIndex() {
   const [name, setName] = useState("");
-  const [birth, setBirth] = useState("");
+  const [birth, setBirth] = useState(new Date().toISOString().slice(0, 10));
   const [picFile, setPicFile] = useState<File | null>();
   const [resizingPicBlob, setResizingPicBlob] = useState<Blob | null>(null);
   const [resizingPicURL, setResizingPicURL] = useState("");
