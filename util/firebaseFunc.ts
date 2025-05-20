@@ -14,11 +14,12 @@ import {
   ToiletData,
   VaccinationData,
   CatInfo,
+  UserInfo,
 } from "./types";
 import { auth, storage } from "firebaseInit";
 
 const loadCatDoc = async (): Promise<DocumentData | undefined> => {
-  const petId = localStorage.getItem("pet");
+  const petId = localStorage.getItem("petId");
   if (petId) {
     const catDocRef = doc(storage, "cats", petId);
     const catDoc = await getDoc(catDocRef);
@@ -57,15 +58,17 @@ const updateCatsDoc = async (
   }
 };
 
-const updateUsersCollection = async (catId: string) => {
-  const user = auth.currentUser;
-  const docRef = doc(storage, "users", user!.uid);
-  await updateDoc(docRef, { pet: catId }).catch((error) => {
+const updateUsersDoc = async (
+  uid: string,
+  data: Partial<Omit<UserInfo, "uid">>
+) => {
+  const docRef = doc(storage, "users", uid);
+  await updateDoc(docRef, data).catch((error) => {
     console.error("저장 중 오류 발생!", error);
   });
 };
 
-const uploadData = async (
+const uploadDiaryData = async (
   catId: string,
   data: ToiletData | FeedingData | PlayingData | VaccinationData,
   collectionName: "toilet" | "feeding" | "playing" | "vaccination"
@@ -96,7 +99,7 @@ export {
   loadCatDoc,
   addCatsCollection,
   updateCatsDoc,
-  updateUsersCollection,
-  uploadData,
+  updateUsersDoc,
+  uploadDiaryData,
   deleteDiaryData,
 };

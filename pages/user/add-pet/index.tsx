@@ -5,7 +5,7 @@ import { updateProfile } from "firebase/auth";
 import styled from "styled-components";
 import resizingImage from "@/util/resizingImage";
 import fetchImgbb from "@/util/fetchImgbb";
-import { addCatsCollection, updateUsersCollection } from "@/util/firebaseFunc";
+import { addCatsCollection, updateUsersDoc } from "@/util/firebaseFunc";
 
 import Button from "@/components/Button";
 import Input from "@/components/Input";
@@ -13,7 +13,7 @@ import PageTitle from "@/components/PageTitle";
 
 function AddPetIndex() {
   const [name, setName] = useState("");
-  const [birth, setBirth] = useState("");
+  const [birth, setBirth] = useState(new Date().toISOString().slice(0, 10));
   const [picFile, setPicFile] = useState<File | null>();
   const [resizingPicBlob, setResizingPicBlob] = useState<Blob | null>(null);
   const [resizingPicURL, setResizingPicURL] = useState("");
@@ -75,12 +75,10 @@ function AddPetIndex() {
       thumb: imgbbThumbUrl || "https://i.ibb.co/Kc6tjcX5/default-profile.png",
       user: [user!.uid],
     }).then(async (catId) => {
-      await updateUsersCollection(catId!);
-      // setUserInfo((prev) => ({
-      //   ...prev,
-      //   pet: catId!,
-      // }));
-      localStorage.setItem("pet", `[${catId}]`);
+      if (catId) {
+        await updateUsersDoc(user!.uid, { petId: catId });
+        localStorage.setItem("petId", `${catId}`);
+      }
     });
 
     alert("내새꾸 등록이 완료됐습니다!");
@@ -111,7 +109,7 @@ function AddPetIndex() {
           </InputWrapper>
           <InputWrapper>
             <label htmlFor="date">생일</label>
-            <input
+            <Input
               type="date"
               name="date"
               value={birth}
@@ -131,8 +129,7 @@ function AddPetIndex() {
               type="file"
               name="pet-profile"
               onChange={selectPicture}
-              accept="image/*"
-              capture="environment"
+              accept=".jpeg,.jpg,.png"
               ref={pictureRef}
               style={{ display: "none" }}
             />
@@ -185,6 +182,7 @@ const InputWrapper = styled.div`
   label {
     width: 80px;
     margin-top: 12px;
+    flex-shrink: 0;
   }
 `;
 

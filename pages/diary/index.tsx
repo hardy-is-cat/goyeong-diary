@@ -28,7 +28,7 @@ const DiaryIndex: NextPageWithLayout = () => {
   useEffect(() => {
     if (!selectedMenu) return;
 
-    const storagePetId = localStorage.getItem("pet");
+    const storagePetId = localStorage.getItem("petId");
     if (!storagePetId) return;
     setPetId(storagePetId);
 

@@ -3,7 +3,7 @@
 import { FormEvent, ReactElement, useEffect, useState } from "react";
 import styled from "styled-components";
 import { NextPageWithLayout } from "pages/_app";
-import { uploadData } from "@/util/firebaseFunc";
+import { uploadDiaryData } from "@/util/firebaseFunc";
 import { FeedingData } from "@/util/types";
 import { useCurrentTime } from "@/util/hooks/useCurrentTime";
 
@@ -34,11 +34,11 @@ const FeedingIndex: NextPageWithLayout = () => {
       memo: etcMemo,
     };
 
-    uploadData(petId + "_" + time, data, "feeding");
+    uploadDiaryData(petId + "_" + time, data, "feeding");
   };
 
   useEffect(() => {
-    setPetId(localStorage.getItem("pet")!);
+    setPetId(localStorage.getItem("petId")!);
   }, []);
 
   return (

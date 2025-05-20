@@ -33,7 +33,7 @@ function SignUpIndex() {
     await setDoc(userDocRef, {
       uid,
       displayName: nickname,
-      pet: "",
+      petId: "",
     });
   };
 

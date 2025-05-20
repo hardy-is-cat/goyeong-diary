@@ -7,7 +7,7 @@ export type CatInfo = {
 
 export type UserInfo = {
   displayName: string | null;
-  pet: string;
+  petId: string;
   uid: string | null;
 };
 

@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { NextPageWithLayout } from "pages/_app";
 import { useCurrentTime } from "@/util/hooks/useCurrentTime";
 import { PlayingData } from "@/util/types";
-import { uploadData } from "@/util/firebaseFunc";
+import { uploadDiaryData } from "@/util/firebaseFunc";
 
 import Button from "@/components/Button";
 import DateInput from "@/components/DateInput";
@@ -57,11 +57,11 @@ const PlayingIndex: NextPageWithLayout = () => {
       playTime: playTime,
     };
 
-    uploadData(petId + "_" + time, data, "playing");
+    uploadDiaryData(petId + "_" + time, data, "playing");
   };
 
   useEffect(() => {
-    setPetId(localStorage.getItem("pet")!);
+    setPetId(localStorage.getItem("petId")!);
   }, []);
 
   return (

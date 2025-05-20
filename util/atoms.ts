@@ -3,7 +3,7 @@ import { UserInfo } from "./types";
 
 const userInfoState = atom<UserInfo>({
   key: "userInfoState",
-  default: { displayName: "", uid: "", pet: "" },
+  default: { displayName: "", uid: "", petId: "" },
 });
 
 const isLoggedInState = atom({

@@ -33,14 +33,10 @@ function LoginIndex() {
         const docRef = doc(storage, "users", userCredential.user.uid);
         const docSnap = await getDoc(docRef);
         const userData = docSnap.data();
-        if (userData?.pet.length === 0) {
+        if (userData?.petId.length === 0) {
           router.push("/user/add-pet");
         } else {
-          // setUserInfo((prev) => ({
-          //   ...prev,
-          //   pet: userData?.pet,
-          // }));
-          localStorage.setItem("pet", userData?.pet);
+          localStorage.setItem("petId", userData?.petId);
           router.push("/");
         }
       })
@@ -71,7 +67,7 @@ function LoginIndex() {
         const docRef = doc(storage, "users", userCredential.user.uid);
         const docSnap = await getDoc(docRef);
         const userData = docSnap.data();
-        localStorage.setItem("pet", userData?.pet);
+        localStorage.setItem("petId", userData?.petId);
         router.push("/");
       })
       .catch((error) => {

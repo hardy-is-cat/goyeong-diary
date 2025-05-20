@@ -5,7 +5,7 @@ import { doc, getDoc } from "firebase/firestore";
 import styled from "styled-components";
 import resizingImage from "@/util/resizingImage";
 import fetchImgbb from "@/util/fetchImgbb";
-import { updateCatsDoc } from "@/util/firebaseFunc";
+import { updateCatsDoc, updateUsersDoc } from "@/util/firebaseFunc";
 
 import Button from "@/components/Button";
 import Input from "@/components/Input";
@@ -69,10 +69,14 @@ function AddPetIndex() {
 
     // firebase 회원정보 변경, cats 컬렉션 해당 문서 업데이트
     const user = auth.currentUser;
-    const petId = localStorage.getItem("pet")!;
+    const petId = localStorage.getItem("petId")!;
 
-    updateProfile(user!, { displayName: displayName, photoURL: imgbbThumbUrl });
+    // 1. firebase user 컬렉션 업데이트
+    updateUsersDoc(user!.uid, { displayName });
+    // 2. localstorage displayName 업데이트
     localStorage.setItem("displayName", displayName!);
+    // 3. currentUser의 displayName 업데이트
+    updateProfile(user!, { displayName, photoURL: imgbbThumbUrl });
     localStorage.setItem("photoURL", imgbbThumbUrl);
 
     updateCatsDoc(
@@ -103,7 +107,7 @@ function AddPetIndex() {
   };
 
   useEffect(() => {
-    const petId = localStorage.getItem("pet");
+    const petId = localStorage.getItem("petId");
     auth.onAuthStateChanged((user) => {
       if (user !== null) {
         setDisplayName(user.displayName!);
@@ -167,8 +171,7 @@ function AddPetIndex() {
               type="file"
               name="pet-profile"
               onChange={selectPicture}
-              accept="image/*"
-              capture="environment"
+              accept=".jpeg,.jpg,.png"
               ref={pictureRef}
               style={{ display: "none" }}
             />

@@ -52,11 +52,11 @@ function DiaryTable({ selectedMenu, data }: DiaryDataType) {
           <>
             <thead>
               <tr>
-                <th>날짜</th>
-                <th>감자</th>
-                <th>맛동산</th>
-                <th>메모</th>
-                {onEdit && <th>삭제</th>}
+                {onEdit && <th style={{ width: "60px" }}>삭제</th>}
+                <th style={{ width: "160px" }}>날짜</th>
+                <th style={{ width: "60px" }}>감자</th>
+                <th style={{ width: "60px" }}>맛동산</th>
+                <th style={{ width: "180px" }}>메모</th>
               </tr>
             </thead>
             <tbody>
@@ -68,12 +68,8 @@ function DiaryTable({ selectedMenu, data }: DiaryDataType) {
                 filteredData?.map((doc) => {
                   return (
                     <tr key={doc.uid}>
-                      <td>{convertDate(doc.date)}</td>
-                      <td>{doc.pees}</td>
-                      <td>{doc.poops}</td>
-                      <td>{doc.memo || "-"}</td>
                       {onEdit && (
-                        <td>
+                        <td className="delete-cell">
                           <DeleteButton
                             onClick={() => deleteDiaryData("toilet", doc.uid)}
                           >
@@ -81,6 +77,10 @@ function DiaryTable({ selectedMenu, data }: DiaryDataType) {
                           </DeleteButton>
                         </td>
                       )}
+                      <td>{convertDate(doc.date)}</td>
+                      <td>{doc.pees}</td>
+                      <td>{doc.poops}</td>
+                      <td>{doc.memo || "-"}</td>
                     </tr>
                   );
                 })
@@ -99,11 +99,11 @@ function DiaryTable({ selectedMenu, data }: DiaryDataType) {
           <>
             <thead>
               <tr>
-                <th>날짜</th>
-                <th>종류</th>
-                <th>양</th>
-                <th>메모</th>
-                {onEdit && <th>삭제</th>}
+                {onEdit && <th style={{ width: "60px" }}>삭제</th>}
+                <th style={{ width: "160px" }}>날짜</th>
+                <th style={{ width: "60px" }}>종류</th>
+                <th style={{ width: "60px" }}>양</th>
+                <th style={{ width: "180px" }}>메모</th>
               </tr>
             </thead>
             <tbody>
@@ -115,12 +115,8 @@ function DiaryTable({ selectedMenu, data }: DiaryDataType) {
                 filteredData?.map((doc) => {
                   return (
                     <tr key={doc.uid}>
-                      <td>{convertDate(doc.date)}</td>
-                      <td>{listOfFeeding[doc.valueOfFeed]}</td>
-                      <td>{doc.volumeOfFeed}g</td>
-                      <td>{doc.memo || "-"}</td>
                       {onEdit && (
-                        <td>
+                        <td className="delete-cell">
                           <DeleteButton
                             onClick={() => deleteDiaryData("feeding", doc.uid)}
                           >
@@ -128,6 +124,10 @@ function DiaryTable({ selectedMenu, data }: DiaryDataType) {
                           </DeleteButton>
                         </td>
                       )}
+                      <td>{convertDate(doc.date)}</td>
+                      <td>{listOfFeeding[doc.valueOfFeed]}</td>
+                      <td>{doc.volumeOfFeed}g</td>
+                      <td>{doc.memo || "-"}</td>
                     </tr>
                   );
                 })
@@ -140,9 +140,9 @@ function DiaryTable({ selectedMenu, data }: DiaryDataType) {
           <>
             <thead>
               <tr>
-                <th>날짜</th>
-                <th>놀이시간</th>
-                {onEdit && <th>삭제</th>}
+                {onEdit && <th style={{ width: "60px" }}>삭제</th>}
+                <th style={{ width: "160px" }}>날짜</th>
+                <th style={{ width: "60px" }}>놀이시간</th>
               </tr>
             </thead>
             <tbody>
@@ -154,10 +154,8 @@ function DiaryTable({ selectedMenu, data }: DiaryDataType) {
                 filteredData?.map((doc) => {
                   return (
                     <tr key={doc.uid}>
-                      <td>{convertDate(doc.date)}</td>
-                      <td>{convertPlayingTime(doc.playTime)}</td>
                       {onEdit && (
-                        <td>
+                        <td className="delete-cell">
                           <DeleteButton
                             onClick={() => deleteDiaryData("playing", doc.uid)}
                           >
@@ -165,6 +163,8 @@ function DiaryTable({ selectedMenu, data }: DiaryDataType) {
                           </DeleteButton>
                         </td>
                       )}
+                      <td>{convertDate(doc.date)}</td>
+                      <td>{convertPlayingTime(doc.playTime)}</td>
                     </tr>
                   );
                 })
@@ -183,10 +183,10 @@ function DiaryTable({ selectedMenu, data }: DiaryDataType) {
           <>
             <thead>
               <tr>
-                <th>날짜</th>
-                <th>종류</th>
-                <th>메모</th>
-                {onEdit && <th>삭제</th>}
+                {onEdit && <th style={{ width: "60px" }}>삭제</th>}
+                <th style={{ width: "160px" }}>날짜</th>
+                <th style={{ width: "80px" }}>종류</th>
+                <th style={{ width: "180px" }}>메모</th>
               </tr>
             </thead>
             <tbody>
@@ -198,11 +198,8 @@ function DiaryTable({ selectedMenu, data }: DiaryDataType) {
                 filteredData?.map((doc) => {
                   return (
                     <tr key={doc.uid}>
-                      <td>{convertDate(doc.date)}</td>
-                      <td>{listOfVaccine[doc.valueOfVaccine]}</td>
-                      <td>{doc.etcVaccine || "-"}</td>
                       {onEdit && (
-                        <td>
+                        <td className="delete-cell">
                           <DeleteButton
                             onClick={() =>
                               deleteDiaryData("vaccination", doc.uid)
@@ -212,6 +209,9 @@ function DiaryTable({ selectedMenu, data }: DiaryDataType) {
                           </DeleteButton>
                         </td>
                       )}
+                      <td>{convertDate(doc.date)}</td>
+                      <td>{listOfVaccine[doc.valueOfVaccine]}</td>
+                      <td>{doc.etcVaccine || "-"}</td>
                     </tr>
                   );
                 })
@@ -249,7 +249,9 @@ function DiaryTable({ selectedMenu, data }: DiaryDataType) {
         value={currentMonth}
         onChange={(e) => setCurrentMonth(e.target.value)}
       />
-      <TableBlock $onEdit={onEdit}>{tableData()}</TableBlock>
+      <TableWrapper>
+        <TableBlock $onEdit={onEdit}>{tableData()}</TableBlock>
+      </TableWrapper>
       <EditButton onClick={() => setOnEdit(!onEdit)}>
         {onEdit ? "편집 종료" : "기록 편집"}
       </EditButton>
@@ -263,31 +265,37 @@ const MonthPicker = styled.input`
   width: 100%;
 `;
 
+const TableWrapper = styled.div`
+  width: 100%;
+  max-height: 60vh;
+  margin-bottom: 12px;
+  overflow-x: auto;
+`;
+
 const TableBlock = styled.table<{ $onEdit: boolean }>`
   width: 100%;
-  border: 1px solid ${({ theme }) => theme.colors.black};
   margin-bottom: 10px;
+  table-layout: fixed;
+  border-collapse: separate;
 
   thead {
     font-weight: 700;
-    background-color: ${({ theme }) => theme.colors.lightGray};
+    position: sticky;
+    top: 0;
+    left: 1px;
+
+    tr {
+      background-color: ${({ theme }) => theme.colors.lightGray};
+    }
 
     th {
       padding: 8px 0;
       border: 1px solid ${({ theme }) => theme.colors.black};
+      border-left: none;
     }
 
-    th:nth-of-type(1) {
-      width: 40%;
-    }
-    th:nth-of-type(2) {
-      width: 15%;
-    }
-    th:nth-of-type(3) {
-      width: 15%;
-    }
-    th:nth-of-type(4) {
-      width: ${({ $onEdit }) => ($onEdit ? "15%" : "30%")};
+    th:first-child {
+      border-left: 1px solid ${({ theme }) => theme.colors.black};
     }
   }
 
@@ -295,16 +303,26 @@ const TableBlock = styled.table<{ $onEdit: boolean }>`
     text-align: center;
 
     td {
-      padding: 8px 4px;
+      padding: 10px 4px;
       border: 1px solid ${({ theme }) => theme.colors.black};
+      border-left: none;
+      border-top: none;
       vertical-align: middle;
+    }
+
+    td.delete-cell {
+      padding: 4px;
+    }
+
+    td:first-child {
+      border-left: 1px solid ${({ theme }) => theme.colors.black};
     }
   }
 `;
 
 const DeleteButton = styled(Button)`
-  width: fit-content;
-  padding: 6px 8px;
+  width: 100%;
+  padding: 4px 8px;
   margin-left: auto;
   margin-right: auto;
   font-size: 14px;

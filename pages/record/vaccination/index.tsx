@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { NextPageWithLayout } from "pages/_app";
 import { useCurrentTime } from "@/util/hooks/useCurrentTime";
 import { VaccinationData } from "@/util/types";
-import { uploadData } from "@/util/firebaseFunc";
+import { uploadDiaryData } from "@/util/firebaseFunc";
 
 import Button from "@/components/Button";
 import DateInput from "@/components/DateInput";
@@ -27,11 +27,11 @@ const VaccinationIndex: NextPageWithLayout = () => {
       etcVaccine: etcMemo,
     };
 
-    uploadData(petId + "_" + time, data, "vaccination");
+    uploadDiaryData(petId + "_" + time, data, "vaccination");
   };
 
   useEffect(() => {
-    setPetId(localStorage.getItem("pet")!);
+    setPetId(localStorage.getItem("petId")!);
   }, []);
 
   return (
