@@ -5,7 +5,7 @@ import { updateProfile } from "firebase/auth";
 import styled from "styled-components";
 import resizingImage from "@/util/resizingImage";
 import fetchImgbb from "@/util/fetchImgbb";
-import { addCatsCollection, updateUsersCollection } from "@/util/firebaseFunc";
+import { addCatsCollection, updateUsersDoc } from "@/util/firebaseFunc";
 
 import Button from "@/components/Button";
 import Input from "@/components/Input";
@@ -75,12 +75,10 @@ function AddPetIndex() {
       thumb: imgbbThumbUrl || "https://i.ibb.co/Kc6tjcX5/default-profile.png",
       user: [user!.uid],
     }).then(async (catId) => {
-      await updateUsersCollection(catId!);
-      // setUserInfo((prev) => ({
-      //   ...prev,
-      //   pet: catId!,
-      // }));
-      localStorage.setItem("pet", `[${catId}]`);
+      if (catId) {
+        await updateUsersDoc(user!.uid, { petId: catId });
+        localStorage.setItem("petId", `${catId}`);
+      }
     });
 
     alert("내새꾸 등록이 완료됐습니다!");

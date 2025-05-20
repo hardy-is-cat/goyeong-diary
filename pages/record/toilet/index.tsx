@@ -10,7 +10,7 @@ import DateInput from "@/components/DateInput";
 import QuantityInput from "@/components/QuantityInput";
 import PageTitle from "@/components/PageTitle";
 import TitleLayout from "@/components/TitleLayout";
-import { uploadData } from "util/firebaseFunc";
+import { uploadDiaryData } from "util/firebaseFunc";
 import { ToiletData } from "@/util/types";
 
 const ToiletIndex: NextPageWithLayout = () => {
@@ -39,11 +39,11 @@ const ToiletIndex: NextPageWithLayout = () => {
       memo: etcMemo,
     };
 
-    uploadData(petId + "_" + time, data, "toilet");
+    uploadDiaryData(petId + "_" + time, data, "toilet");
   };
 
   useEffect(() => {
-    setPetId(localStorage.getItem("pet")!);
+    setPetId(localStorage.getItem("petId")!);
   }, []);
 
   return (

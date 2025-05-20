@@ -12,7 +12,7 @@ function GNB() {
   const [userHavePet, setUserHavePet] = useState(false);
 
   useEffect(() => {
-    setUserHavePet(!!localStorage.getItem("pet"));
+    setUserHavePet(!!localStorage.getItem("petId"));
   });
 
   if (!userHavePet) {
